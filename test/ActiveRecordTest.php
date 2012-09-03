@@ -178,12 +178,18 @@ class ActiveRecordTest extends DatabaseTest
 		$this->assert_true(class_exists('NamespaceTest\Book'));
 	}
 
+	/**
+	 * @depends test_auto_load_with_namespaced_model
+	 */
 	public function test_namespace_gets_stripped_from_table_name()
 	{
 		$model = new NamespaceTest\Book();
 		$this->assert_equals('books',$model->table()->table);
 	}
 
+	/**
+	 * @depends test_auto_load_with_namespaced_model
+	 */
 	public function test_namespace_gets_stripped_from_inferred_foreign_key()
 	{
 		$model = new NamespaceTest\Book();

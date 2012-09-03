@@ -197,7 +197,7 @@ class Config extends Singleton
 	 */
 	public function set_model_directory($dir)
 	{
-		$this->model_directories = array($dir);
+		$this->set_model_directories(array($dir));
 	}
 	
 	/**
@@ -208,10 +208,8 @@ class Config extends Singleton
 	 */
 	public function get_model_directory()
 	{
-		if ($this->model_directories && $model_directory = array_shift($this->model_directories) && !file_exists($model_directory))
-			throw new ConfigException('Invalid or non-existent directory: '.$model_directory);
-
-		return $model_directory;
+		$model_directories = $this->get_model_directories();
+		return array_shift($model_directories);
 	}
 	
 	
