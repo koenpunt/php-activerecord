@@ -4,22 +4,22 @@ use ActiveRecord\Column;
 use ActiveRecord\DateTime;
 use ActiveRecord\DatabaseException;
 
-class ColumnTest extends SnakeCase_PHPUnit_Framework_TestCase
+class ColumnTest extends ActiveRecord_TestCase
 {
-	public function set_up()
+	public function setUp()
 	{
 		$this->column = new Column();
 		try {
 			$this->conn = ActiveRecord\ConnectionManager::get_connection(ActiveRecord\Config::instance()->get_default_connection());
 		} catch (DatabaseException $e) {
-			$this->mark_test_skipped('failed to connect using default connection. '.$e->getMessage());
+			$this->markTestSkipped('failed to connect using default connection. '.$e->getMessage());
 		}
 	}
 
 	public function assert_mapped_type($type, $raw_type)
 	{
 		$this->column->raw_type = $raw_type;
-		$this->assert_equals($type,$this->column->map_raw_type());
+		$this->assertEquals($type,$this->column->map_raw_type());
 	}
 
 	public function assert_cast($type, $casted_value, $original_value)
@@ -28,9 +28,9 @@ class ColumnTest extends SnakeCase_PHPUnit_Framework_TestCase
 		$value = $this->column->cast($original_value,$this->conn);
 
 		if ($original_value != null && ($type == Column::DATETIME || $type == Column::DATE))
-			$this->assert_true($value instanceof DateTime);
+			$this->assertInstanceOf('DateTime', $value);
 		else
-			$this->assert_same($casted_value,$value);
+			$this->assertSame($casted_value,$value);
 	}
 
 	public function test_map_raw_type_dates()
@@ -73,7 +73,7 @@ class ColumnTest extends SnakeCase_PHPUnit_Framework_TestCase
 	{
 		$this->column->raw_type = 'integer';
 		$this->column->map_raw_type();
-		$this->assert_equals('int',$this->column->raw_type);
+		$this->assertEquals('int',$this->column->raw_type);
 	}
 
 	public function test_cast()
@@ -119,15 +119,15 @@ class ColumnTest extends SnakeCase_PHPUnit_Framework_TestCase
 	{
 		$column = new Column();
 		$column->type = Column::DATE;
-		$this->assert_equals(null,$column->cast(null,$this->conn));
-		$this->assert_equals(null,$column->cast('',$this->conn));
+		$this->assertEquals(null,$column->cast(null,$this->conn));
+		$this->assertEquals(null,$column->cast('',$this->conn));
 	}
 
 	public function test_empty_and_null_datetime_strings_should_return_null()
 	{
 		$column = new Column();
 		$column->type = Column::DATETIME;
-		$this->assert_equals(null,$column->cast(null,$this->conn));
-		$this->assert_equals(null,$column->cast('',$this->conn));
+		$this->assertEquals(null,$column->cast(null,$this->conn));
+		$this->assertEquals(null,$column->cast('',$this->conn));
 	}
 }

@@ -11,7 +11,7 @@ class DateFormatTest extends DatabaseTest
 		$author->save();
 		
 		$author = Author::first();
-		$this->assert_is_a("ActiveRecord\\DateTime",$author->some_date);
+		$this->assertInstanceOf("ActiveRecord\\DateTime", $author->some_date);
 	}
 
 }

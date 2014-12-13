@@ -15,7 +15,7 @@ set_include_path(get_include_path() . PATH_SEPARATOR . './vendor/phpunit/PHPUnit
 @include_once 'Log.php';
 @include_once 'Log/file.php';
 require_once 'PHPUnit/Framework/TestCase.php';
-require_once 'SnakeCase_PHPUnit_Framework_TestCase.php';
+require_once 'ActiveRecord_TestCase.php';
 require_once 'DatabaseTest.php';
 require_once 'AdapterTest.php';
 require_once __DIR__ . '/../../ActiveRecord.php';
