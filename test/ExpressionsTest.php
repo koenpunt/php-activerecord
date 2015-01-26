@@ -1,5 +1,4 @@
 <?php
-require_once __DIR__ . '/../lib/Expressions.php';
 
 use ActiveRecord\Expressions;
 use ActiveRecord\ConnectionManager;
@@ -80,6 +79,13 @@ class ExpressionsTest extends SnakeCase_PHPUnit_Framework_TestCase
 		$a = new Expressions(null,'name=?',0);
 		$this->assert_equals('name=?',$a->to_s());
 		$this->assert_equals(array(0),$a->values());
+	}
+
+	public function test_empty_array_variable()
+	{
+		$a = new Expressions(null,'id IN(?)',array());
+		$this->assert_equals('id IN(?)',$a->to_s());
+		$this->assert_equals(array(array()),$a->values());
 	}
 
 	public function test_ignore_invalid_parameter_marker()
@@ -198,4 +204,3 @@ class ExpressionsTest extends SnakeCase_PHPUnit_Framework_TestCase
 		$this->assert_equals('id=? AND name IN(?,?)',$a->to_s());
 	}
 }
-?>

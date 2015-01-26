@@ -79,6 +79,15 @@ class ActiveRecordFindTest extends DatabaseTest
 		$this->assert_equals(1,$authors[0]->author_id);
 	}
 
+	/**
+	 * @expectedException ActiveRecord\DatabaseException
+	 */
+	public function test_find_all_with_empty_array_bind_value_throws_exception()
+	{
+		$authors = Author::find('all',array('conditions' => array('author_id IN(?)', array())));
+		$this->assertCount(0,$authors);
+	}
+
 	public function test_find_hash_using_alias()
 	{
 		$venues = Venue::all(array('conditions' => array('marquee' => 'Warner Theatre', 'city' => array('Washington','New York'))));
@@ -436,6 +445,14 @@ class ActiveRecordFindTest extends DatabaseTest
 		Author::find(0);
 	}
 
+	/**
+	 * @expectedException ActiveRecord\RecordNotFound
+	 */
+	public function test_find_by_null()
+	{
+		Author::find(null);
+	}
+
 	public function test_count_by()
 	{
 		$this->assert_equals(2,Venue::count_by_state('VA'));
@@ -451,11 +468,6 @@ class ActiveRecordFindTest extends DatabaseTest
 
 	public function test_find_by_datetime()
 	{
-		if ( getenv('TRAVIS') ) $this->markTestSkipped(
-			'The Travis CI environment seems to screw this up for unknonwn reasons; ' .
-			'see Github #298 (https://github.com/kla/php-activerecord/issues/298)'
-		);
-
 		$now = new DateTime();
 		$arnow = new ActiveRecord\DateTime();
 		$arnow->setTimestamp($now->getTimestamp());
@@ -464,5 +476,4 @@ class ActiveRecordFindTest extends DatabaseTest
 		$this->assert_not_null(Author::find_by_created_at($now));
 		$this->assert_not_null(Author::find_by_created_at($arnow));
 	}
-};
-?>
+}

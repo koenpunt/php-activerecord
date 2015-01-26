@@ -88,6 +88,23 @@ class Model
 	private $attributes = array();
 
 	/**
+	 * Contains changes made to model attributes as
+	 * $attribute_name => array($original_value, $current_value)
+	 *
+	 * @var array
+	 * @access private
+	 */
+	private $changed_attributes = array();
+
+	/**
+	 * Contains changes made to model attributes before it was saved
+	 *
+	 * @var array
+	 * @access private
+	 */
+	private $previously_changed = array();
+
+	/**
 	 * Flag whether or not this model's attributes have been modified since it will either be null or an array of column_names that have been modified
 	 *
 	 * @var array
@@ -152,6 +169,18 @@ class Model
 	 * @var string
 	 */
 	static $sequence;
+
+	/**
+	 * Set this to true in your subclass to use caching for this model. Note that you must also configure a cache object.
+	 */
+	static $cache = false;
+
+	/**
+	 * Set this to specify an expiration period for this model. If not set, the expire value you set in your cache options will be used.
+	 *
+	 * @var number
+	 */
+	static $cache_expire;
 
 	/**
 	 * Allows you to create aliases for attributes.
@@ -399,7 +428,7 @@ class Model
 		if (array_key_exists($name, static::$alias_attribute))
 			$name = static::$alias_attribute[$name];
 
-		elseif (method_exists($this,"set_$name"))
+		if (method_exists($this,"set_$name"))
 		{
 			$name = "set_$name";
 			return $this->$name($value);
@@ -456,8 +485,16 @@ class Model
 		if ($value instanceof DateTime)
 			$value->attribute_of($this,$name);
 
-		$this->attributes[$name] = $value;
-		$this->flag_dirty($name);
+		// only update the attribute if it isn't set or has changed
+		if (!isset($this->attributes[$name]) || ($this->attributes[$name] !== $value)) {
+			// track changes to the attribute
+			if (array_key_exists($name, $this->attributes) && !isset($this->changed_attributes[$name]))
+				$this->changed_attributes[$name] = $this->attributes[$name];
+
+			// set the attribute and flag as dirty
+			$this->attributes[$name] = $value;
+			$this->flag_dirty($name);
+		}
 		return $value;
 	}
 
@@ -477,8 +514,10 @@ class Model
 			$name = static::$alias_attribute[$name];
 
 		// check for attribute
-		if (array_key_exists($name,$this->attributes))
-			return $this->attributes[$name];
+		if (array_key_exists($name,$this->attributes)) {
+			$value = $this->attributes[$name];
+			return $value;
+		}
 
 		// check relationships if no attribute
 		if (array_key_exists($name,$this->__relationships))
@@ -566,6 +605,52 @@ class Model
 	public function attributes()
 	{
 		return $this->attributes;
+	}
+
+	/**
+	 * Returns a copy of the model's changed attributes hash with the
+	 * attribute name and the original value.
+	 *
+	 * @return array A copy of the model's changed attribute data
+	 */
+	public function changed_attributes()
+	{
+		return $this->changed_attributes;
+	}
+
+	/**
+	 * Returns a copy of the model's changed attributes as a hash
+	 * in the form $attribute => array($original_value, $current_value)
+	 *
+	 * @return array A copy of the model's attribute changes
+	 */
+	public function changes()
+	{
+		$changes = array();
+		$attributes = array_intersect_key($this->attributes, $this->changed_attributes);
+		foreach($attributes as $name => $value) {
+			$changes[$name] = array($this->changed_attributes[$name],$value);
+		}
+		return $changes;
+	}
+
+	/**
+	 * Returns a copy of the model's changed attributes before it was saved
+	 *
+	 * @return array A copy of the model's changed attribute before a save
+	 */
+	public function previous_changes()
+	{
+		return $this->previously_changed;
+	}
+
+	/**
+	 * Returns the value of an attribute before it was changed
+	 *
+	 * @return string The original value of an attribute
+	 */
+	public function attribute_was($name) {
+		return isset($this->changed_attributes[$name]) ? $this->changed_attributes[$name] : null;
 	}
 
 	/**
@@ -693,7 +778,7 @@ class Model
 	/**
 	 * Throws an exception if this model is set to readonly.
 	 *
-	 * @throws ActiveRecord\ReadOnlyException
+	 * @throws \ActiveRecord\ReadOnlyException
 	 * @param string $method_name Name of method that was invoked on model for exception message
 	 */
 	private function verify_not_readonly($method_name)
@@ -834,6 +919,8 @@ class Model
 
 		$this->__new_record = false;
 		$this->invoke_callback('after_create',false);
+
+		$this->update_cache();
 		return true;
 	}
 
@@ -864,9 +951,24 @@ class Model
 			$dirty = $this->dirty_attributes();
 			static::table()->update($dirty,$pk);
 			$this->invoke_callback('after_update',false);
+			$this->update_cache();
 		}
 
 		return true;
+	}
+
+	protected function update_cache()
+	{
+		$table = static::table();
+		if($table->cache_individual_model){
+			Cache::set($this->cache_key(), $this, $table->cache_model_expire);
+		}
+	}
+
+	protected function cache_key()
+	{
+		$table = static::table();
+		return $table->cache_key_for_model($this->values_for_pk());
 	}
 
 	/**
@@ -1003,8 +1105,18 @@ class Model
 
 		static::table()->delete($pk);
 		$this->invoke_callback('after_destroy',false);
+		$this->remove_from_cache();
 
 		return true;
+	}
+
+	public function remove_from_cache()
+	{
+		$table = static::table();
+		if($table->cache_individual_model)
+		{
+			Cache::delete($this->cache_key());
+		}
 	}
 
 	/**
@@ -1154,7 +1266,7 @@ class Model
 	/**
 	 * Passing $guard_attributes as true will throw an exception if an attribute does not exist.
 	 *
-	 * @throws ActiveRecord\UndefinedPropertyException
+	 * @throws \ActiveRecord\UndefinedPropertyException
 	 * @param array $attributes An array in the form array(name => value, ...)
 	 * @param boolean $guard_attributes Flag of whether or not protected/non-accessible attributes should be guarded
 	 */
@@ -1242,6 +1354,8 @@ class Model
 	 */
 	public function reload()
 	{
+		$this->remove_from_cache();
+
 		$this->__relationships = array();
 		$pk = array_values($this->get_values_for($this->get_primary_key()));
 
@@ -1263,9 +1377,11 @@ class Model
 	 *
 	 * @see dirty_attributes
 	 */
-	public function reset_dirty()
+	public function reset_dirty($model_was_saved=false)
 	{
 		$this->__dirty = null;
+		$this->previously_changed = $model_was_saved ? $this->changes() : array();
+		$this->changed_attributes = array();
 	}
 
 	/**
@@ -1550,8 +1666,8 @@ class Model
 					// fall thru
 
 			 	case 'first':
-			 		$options['limit'] = 1;
-			 		$options['offset'] = 0;
+					$options['limit'] = 1;
+					$options['offset'] = 0;
 			 		break;
 			}
 
@@ -1573,6 +1689,29 @@ class Model
 	}
 
 	/**
+	 * Will look up a list of primary keys from cache
+	 *
+	 * @param array $pks An array of primary keys
+	 * @return array
+	 */
+	protected static function get_models_from_cache(array $pks)
+	{
+		$models = array();
+		$table = static::table();
+
+		foreach($pks as $pk)
+		{
+			$options =array('conditions' => static::pk_conditions($pk));
+			$models[] = Cache::get($table->cache_key_for_model($pk), function() use ($table, $options)
+			{
+				$res = $table->find($options);
+				return $res ? $res[0] : null;
+			}, $table->cache_model_expire);
+		}
+		return array_filter($models);
+	}
+
+	/**
 	 * Finder method which will find by a single or array of primary keys for this model.
 	 *
 	 * @see find
@@ -1583,23 +1722,36 @@ class Model
 	 */
 	public static function find_by_pk($values, $options)
 	{
-		$options['conditions'] = static::pk_conditions($values);
-		$list = static::table()->find($options);
+		if($values===null)
+		{
+			throw new RecordNotFound("Couldn't find ".get_called_class()." without an ID");
+		}
+
+		$table = static::table();
+
+		if($table->cache_individual_model)
+		{
+			$pks = is_array($values) ? $values : array($values);
+			$list = static::get_models_from_cache($pks);
+		}
+		else
+		{
+			$options['conditions'] = static::pk_conditions($values);
+			$list = $table->find($options);
+		}
 		$results = count($list);
 
 		if ($results != ($expected = count($values)))
 		{
 			$class = get_called_class();
+			if (is_array($values))
+				$values = join(',',$values);
 
 			if ($expected == 1)
 			{
-				if (!is_array($values))
-					$values = array($values);
-
-				throw new RecordNotFound("Couldn't find $class with ID=" . join(',',$values));
+				throw new RecordNotFound("Couldn't find $class with ID=$values");
 			}
 
-			$values = join(',',$values);
 			throw new RecordNotFound("Couldn't find all $class with IDs ($values) (found $results, but was looking for $expected)");
 		}
 		return $expected == 1 ? $list[0] : $list;
@@ -1834,7 +1986,7 @@ class Model
 	 * });
 	 * </code>
 	 *
-	 * @param Closure $closure The closure to execute. To cause a rollback have your closure return false or throw an exception.
+	 * @param callable $closure The closure to execute. To cause a rollback have your closure return false or throw an exception.
 	 * @return boolean True if the transaction was committed, False if rolled back.
 	 */
 	public static function transaction($closure)
