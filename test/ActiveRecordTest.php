@@ -2,71 +2,71 @@
 
 class ActiveRecordTest extends DatabaseTest
 {
-	public function set_up($connection_name=null)
+	public function setUp($connection_name=null)
 	{
-		parent::set_up($connection_name);
+		parent::setUp($connection_name);
 		$this->options = array('conditions' => 'blah', 'order' => 'blah');
 	}
 
-	public function test_options_is_not()
+	public function testOptionsIsNot()
 	{
-		$this->assert_false(Author::is_options_hash(null));
-		$this->assert_false(Author::is_options_hash(''));
-		$this->assert_false(Author::is_options_hash('tito'));
-		$this->assert_false(Author::is_options_hash(array()));
-		$this->assert_false(Author::is_options_hash(array(1,2,3)));
+		$this->assertFalse(Author::is_options_hash(null));
+		$this->assertFalse(Author::is_options_hash(''));
+		$this->assertFalse(Author::is_options_hash('tito'));
+		$this->assertFalse(Author::is_options_hash(array()));
+		$this->assertFalse(Author::is_options_hash(array(1,2,3)));
 	}
 
 	/**
 	 * @expectedException ActiveRecord\ActiveRecordException
 	 */
-	public function test_options_hash_with_unknown_keys() {
-		$this->assert_false(Author::is_options_hash(array('conditions' => 'blah', 'sharks' => 'laserz', 'dubya' => 'bush')));
+	public function testOptionsHashWithUnknownKeys() {
+		$this->assertFalse(Author::is_options_hash(array('conditions' => 'blah', 'sharks' => 'laserz', 'dubya' => 'bush')));
 	}
 
-	public function test_options_is_hash()
+	public function testOptionsIsHash()
 	{
-		$this->assert_true(Author::is_options_hash($this->options));
+		$this->assertTrue(Author::is_options_hash($this->options));
 	}
 
-	public function test_extract_and_validate_options() {
+	public function testExtractAndValidateOptions() {
 		$args = array('first',$this->options);
-		$this->assert_equals($this->options,Author::extract_and_validate_options($args));
-		$this->assert_equals(array('first'),$args);
+		$this->assertEquals($this->options,Author::extract_and_validate_options($args));
+		$this->assertEquals(array('first'),$args);
 	}
 
-	public function test_extract_and_validate_options_with_array_in_args() {
+	public function testExtractAndValidateOptionsWithArrayInArgs() {
 		$args = array('first',array(1,2),$this->options);
-		$this->assert_equals($this->options,Author::extract_and_validate_options($args));
+		$this->assertEquals($this->options,Author::extract_and_validate_options($args));
 	}
 
-	public function test_extract_and_validate_options_removes_options_hash() {
+	public function testExtractAndValidateOptionsRemovesOptionsHash() {
 		$args = array('first',$this->options);
 		Author::extract_and_validate_options($args);
-		$this->assert_equals(array('first'),$args);
+		$this->assertEquals(array('first'),$args);
 	}
 
-	public function test_extract_and_validate_options_nope() {
+	public function testExtractAndValidateOptionsNope() {
 		$args = array('first');
-		$this->assert_equals(array(),Author::extract_and_validate_options($args));
-		$this->assert_equals(array('first'),$args);
+		$this->assertEquals(array(),Author::extract_and_validate_options($args));
+		$this->assertEquals(array('first'),$args);
 	}
 
-	public function test_extract_and_validate_options_nope_because_wasnt_at_end() {
+	public function testExtractAndValidateOptionsNopeBecauseWasntAtEnd() {
 		$args = array('first',$this->options,array(1,2));
-		$this->assert_equals(array(),Author::extract_and_validate_options($args));
+		$this->assertEquals(array(),Author::extract_and_validate_options($args));
 	}
 
 	/**
 	 * @expectedException ActiveRecord\UndefinedPropertyException
 	 */
-	public function test_invalid_attribute()
+	public function testInvalidAttribute()
 	{
 		$author = Author::find('first',array('conditions' => 'author_id=1'));
 		$author->some_invalid_field_name;
 	}
 
-	public function test_invalid_attributes()
+	public function testInvalidAttributes()
 	{
 		$book = Book::find(1);
 		try {
@@ -75,268 +75,268 @@ class ActiveRecordTest extends DatabaseTest
 			$exceptions = explode("\r\n", $e->getMessage());
 		}
 
-		$this->assert_equals(1, substr_count($exceptions[0], 'invalid_attribute'));
-		$this->assert_equals(1, substr_count($exceptions[1], 'another_invalid_attribute'));
+		$this->assertEquals(1, substr_count($exceptions[0], 'invalid_attribute'));
+		$this->assertEquals(1, substr_count($exceptions[1], 'another_invalid_attribute'));
 	}
 
-	public function test_getter_undefined_property_exception_includes_model_name()
+	public function testGetterUndefinedPropertyExceptionIncludesModelName()
 	{
-		$this->assert_exception_message_contains("Author->this_better_not_exist",function()
+		$this->assertExceptionMessageContains("Author->this_better_not_exist",function()
 		{
 			$author = new Author();
 			$author->this_better_not_exist;
 		});
 	}
 
-	public function test_mass_assignment_undefined_property_exception_includes_model_name()
+	public function testMassAssignmentUndefinedPropertyExceptionIncludesModelName()
 	{
-		$this->assert_exception_message_contains("Author->this_better_not_exist",function()
+		$this->assertExceptionMessageContains("Author->this_better_not_exist",function()
 		{
 			new Author(array("this_better_not_exist" => "hi"));
 		});
 	}
 
-	public function test_setter_undefined_property_exception_includes_model_name()
+	public function testSetterUndefinedPropertyExceptionIncludesModelName()
 	{
-		$this->assert_exception_message_contains("Author->this_better_not_exist",function()
+		$this->assertExceptionMessageContains("Author->this_better_not_exist",function()
 		{
 			$author = new Author();
 			$author->this_better_not_exist = "hi";
 		});
 	}
 
-	public function test_get_values_for()
+	public function testGetValuesFor()
 	{
 		$book = Book::find_by_name('Ancient Art of Main Tanking');
 		$ret = $book->get_values_for(array('book_id','author_id'));
-		$this->assert_equals(array('book_id','author_id'),array_keys($ret));
-		$this->assert_equals(array(1,1),array_values($ret));
+		$this->assertEquals(array('book_id','author_id'),array_keys($ret));
+		$this->assertEquals(array(1,1),array_values($ret));
 	}
 
-	public function test_hyphenated_column_names_to_underscore()
+	public function testHyphenatedColumnNamesToUnderscore()
 	{
 		if ($this->conn instanceof ActiveRecord\OciAdapter)
 			return;
 
 		$keys = array_keys(RmBldg::first()->attributes());
-		$this->assert_true(in_array('rm_name',$keys));
+		$this->assertTrue(in_array('rm_name',$keys));
 	}
 
-	public function test_column_names_with_spaces()
+	public function testColumnNamesWithSpaces()
 	{
 		if ($this->conn instanceof ActiveRecord\OciAdapter)
 			return;
 
 		$keys = array_keys(RmBldg::first()->attributes());
-		$this->assert_true(in_array('space_out',$keys));
+		$this->assertTrue(in_array('space_out',$keys));
 	}
 
-	public function test_mixed_case_column_name()
+	public function testMixedCaseColumnName()
 	{
 		$keys = array_keys(Author::first()->attributes());
-		$this->assert_true(in_array('mixedcasefield',$keys));
+		$this->assertTrue(in_array('mixedcasefield',$keys));
 	}
 
-	public function test_mixed_case_primary_key_save()
+	public function testMixedCasePrimaryKeySave()
 	{
 		$venue = Venue::find(1);
 		$venue->name = 'should not throw exception';
 		$venue->save();
-		$this->assert_equals($venue->name,Venue::find(1)->name);
+		$this->assertEquals($venue->name,Venue::find(1)->name);
 	}
 
-	public function test_reload()
+	public function testReload()
 	{
 		$venue = Venue::find(1);
-		$this->assert_equals('NY', $venue->state);
+		$this->assertEquals('NY', $venue->state);
 		$venue->state = 'VA';
-		$this->assert_equals('VA', $venue->state);
+		$this->assertEquals('VA', $venue->state);
 		$venue->reload();
-		$this->assert_equals('NY', $venue->state);
+		$this->assertEquals('NY', $venue->state);
 	}
 	
-	public function test_reload_protected_attribute()
+	public function testReloadProtectedAttribute()
 	{
 		$book = BookAttrAccessible::find(1);
 	
 		$book->name = "Should not stay";
 		$book->reload();
-		$this->assert_not_equals("Should not stay", $book->name);
+		$this->assertNotEquals("Should not stay", $book->name);
 	}
 
-	public function test_active_record_model_home_not_set()
+	public function testActiveRecordModelHomeNotSet()
 	{
 		$home = ActiveRecord\Config::instance()->get_model_directory();
 		ActiveRecord\Config::instance()->set_model_directory(__DIR__);
-		$this->assert_equals(false,class_exists('TestAutoload'));
+		$this->assertEquals(false,class_exists('TestAutoload'));
 
 		ActiveRecord\Config::instance()->set_model_directory($home);
 	}
 
-	public function test_auto_load_with_model_in_secondary_model_directory(){
+	public function testAutoLoadWithModelInSecondaryModelDirectory(){
 		$home = ActiveRecord\Config::instance()->get_model_directory();
 		ActiveRecord\Config::instance()->set_model_directories(array(
 			realpath(__DIR__ . '/models'),
 			realpath(__DIR__ . '/backup-models'),
 		));
-		$this->assert_true(class_exists('Backup'));
+		$this->assertTrue(class_exists('Backup'));
 
 		ActiveRecord\Config::instance()->set_model_directory($home);
 	}
 
-	public function test_auto_load_with_namespaced_model()
+	public function testAutoLoadWithNamespacedModel()
 	{
-		$this->assert_true(class_exists('NamespaceTest\Book'));
+		$this->assertTrue(class_exists('NamespaceTest\Book'));
 	}
 
-	public function test_auto_load_with_namespaced_model_in_secondary_model_directory(){
+	public function testAutoLoadWithNamespacedModelInSecondaryModelDirectory(){
 		$home = ActiveRecord\Config::instance()->get_model_directory();
 		ActiveRecord\Config::instance()->set_model_directories(array(
 			realpath(__DIR__ . '/models'),
 			realpath(__DIR__ . '/backup-models'),
 		));
-		$this->assert_true(class_exists('NamespaceTest\Backup'));
+		$this->assertTrue(class_exists('NamespaceTest\Backup'));
 
 		ActiveRecord\Config::instance()->set_model_directory($home);
 	}
 
-	public function test_namespace_gets_stripped_from_table_name()
+	public function testNamespaceGetsStrippedFromTableName()
 	{
 		$model = new NamespaceTest\Book();
-		$this->assert_equals('books',$model->table()->table);
+		$this->assertEquals('books',$model->table()->table);
 	}
 
-	public function test_namespace_gets_stripped_from_inferred_foreign_key()
+	public function testNamespaceGetsStrippedFromInferredForeignKey()
 	{
 		$model = new NamespaceTest\Book();
 		$table = ActiveRecord\Table::load(get_class($model));
 
-		$this->assert_equals($table->get_relationship('parent_book')->foreign_key[0], 'book_id');
-		$this->assert_equals($table->get_relationship('parent_book_2')->foreign_key[0], 'book_id');
-		$this->assert_equals($table->get_relationship('parent_book_3')->foreign_key[0], 'book_id');
+		$this->assertEquals($table->get_relationship('parent_book')->foreign_key[0], 'book_id');
+		$this->assertEquals($table->get_relationship('parent_book_2')->foreign_key[0], 'book_id');
+		$this->assertEquals($table->get_relationship('parent_book_3')->foreign_key[0], 'book_id');
 	}
 
-	public function test_namespaced_relationship_associates_correctly()
+	public function testNamespacedRelationshipAssociatesCorrectly()
 	{
 		$model = new NamespaceTest\Book();
 		$table = ActiveRecord\Table::load(get_class($model));
 
-		$this->assert_not_null($table->get_relationship('parent_book'));
-		$this->assert_not_null($table->get_relationship('parent_book_2'));
-		$this->assert_not_null($table->get_relationship('parent_book_3'));
+		$this->assertNotNull($table->get_relationship('parent_book'));
+		$this->assertNotNull($table->get_relationship('parent_book_2'));
+		$this->assertNotNull($table->get_relationship('parent_book_3'));
 
-		$this->assert_not_null($table->get_relationship('pages'));
-		$this->assert_not_null($table->get_relationship('pages_2'));
+		$this->assertNotNull($table->get_relationship('pages'));
+		$this->assertNotNull($table->get_relationship('pages_2'));
 
-		$this->assert_null($table->get_relationship('parent_book_4'));
-		$this->assert_null($table->get_relationship('pages_3'));
+		$this->assertNull($table->get_relationship('parent_book_4'));
+		$this->assertNull($table->get_relationship('pages_3'));
 
 		// Should refer to the same class
-		$this->assert_same(
+		$this->assertSame(
 			ltrim($table->get_relationship('parent_book')->class_name, '\\'),
 			ltrim($table->get_relationship('parent_book_2')->class_name, '\\')
 		);
 
 		// Should refer to different classes
-		$this->assert_not_same(
+		$this->assertNotSame(
 			ltrim($table->get_relationship('parent_book_2')->class_name, '\\'),
 			ltrim($table->get_relationship('parent_book_3')->class_name, '\\')
 		);
 
 		// Should refer to the same class
-		$this->assert_same(
+		$this->assertSame(
 			ltrim($table->get_relationship('pages')->class_name, '\\'),
 			ltrim($table->get_relationship('pages_2')->class_name, '\\')
 		);
 	}
 
-	public function test_should_have_all_column_attributes_when_initializing_with_array()
+	public function testShouldHaveAllColumnAttributesWhenInitializingWithArray()
 	{
 		$author = new Author(array('name' => 'Tito'));
-		$this->assert_true(count(array_keys($author->attributes())) >= 9);
+		$this->assertTrue(count(array_keys($author->attributes())) >= 9);
 	}
 
-	public function test_defaults()
+	public function testDefaults()
 	{
 		$author = new Author();
-		$this->assert_equals('default_name',$author->name);
+		$this->assertEquals('default_name',$author->name);
 	}
 
-	public function test_alias_attribute_getter()
+	public function testAliasAttributeGetter()
 	{
 		$venue = Venue::find(1);
-		$this->assert_equals($venue->marquee, $venue->name);
-		$this->assert_equals($venue->mycity, $venue->city);
+		$this->assertEquals($venue->marquee, $venue->name);
+		$this->assertEquals($venue->mycity, $venue->city);
 	}
 
-	public function test_alias_attribute_setter()
+	public function testAliasAttributeSetter()
 	{
 		$venue = Venue::find(1);
 		$venue->marquee = 'new name';
-		$this->assert_equals($venue->marquee, 'new name');
-		$this->assert_equals($venue->marquee, $venue->name);
+		$this->assertEquals($venue->marquee, 'new name');
+		$this->assertEquals($venue->marquee, $venue->name);
 
 		$venue->name = 'another name';
-		$this->assert_equals($venue->name, 'another name');
-		$this->assert_equals($venue->marquee, $venue->name);
+		$this->assertEquals($venue->name, 'another name');
+		$this->assertEquals($venue->marquee, $venue->name);
 	}
 
-	public function test_alias_attribute_custom_setter()
+	public function testAliasAttributeCustomSetter()
 	{
 		Venue::$use_custom_set_city_setter = true;
 		$venue = Venue::find(1);
 
 		$venue->mycity = 'cityname';
-		$this->assert_equals($venue->mycity, 'cityname#');
-		$this->assert_equals($venue->mycity, $venue->city);
+		$this->assertEquals($venue->mycity, 'cityname#');
+		$this->assertEquals($venue->mycity, $venue->city);
 
 		$venue->city = 'anothercity';
-		$this->assert_equals($venue->city, 'anothercity#');
-		$this->assert_equals($venue->city, $venue->mycity);
+		$this->assertEquals($venue->city, 'anothercity#');
+		$this->assertEquals($venue->city, $venue->mycity);
 
 		Venue::$use_custom_set_city_setter = false;
 	}
 
-	public function test_alias_from_mass_attributes()
+	public function testAliasFromMassAttributes()
 	{
 		$venue = new Venue(array('marquee' => 'meme', 'id' => 123));
-		$this->assert_equals('meme',$venue->name);
-		$this->assert_equals($venue->marquee,$venue->name);
+		$this->assertEquals('meme',$venue->name);
+		$this->assertEquals($venue->marquee,$venue->name);
 	}
 
-	public function test_gh18_isset_on_aliased_attribute()
+	public function testGh18IssetOnAliasedAttribute()
 	{
-		$this->assert_true(isset(Venue::first()->marquee));
+		$this->assertTrue(isset(Venue::first()->marquee));
 	}
 
-	public function test_attr_accessible()
+	public function testAttrAccessible()
 	{
 		$book = new BookAttrAccessible(array('name' => 'should not be set', 'author_id' => 1));
-		$this->assert_null($book->name);
-		$this->assert_equals(1,$book->author_id);
+		$this->assertNull($book->name);
+		$this->assertEquals(1,$book->author_id);
 		$book->name = 'test';
-		$this->assert_equals('test', $book->name);
+		$this->assertEquals('test', $book->name);
 	}
 
-	public function test_attr_protected()
+	public function testAttrProtected()
 	{
 		$book = new BookAttrAccessible(array('book_id' => 999));
-		$this->assert_null($book->book_id);
+		$this->assertNull($book->book_id);
 		$book->book_id = 999;
-		$this->assert_equals(999, $book->book_id);
+		$this->assertEquals(999, $book->book_id);
 	}
 
-	public function test_isset()
+	public function testIsset()
 	{
 		$book = new Book();
-		$this->assert_true(isset($book->name));
-		$this->assert_false(isset($book->sharks));
+		$this->assertTrue(isset($book->name));
+		$this->assertFalse(isset($book->sharks));
 	}
 
-	public function test_readonly_only_halt_on_write_method()
+	public function testReadonlyOnlyHaltOnWriteMethod()
 	{
 		$book = Book::first(array('readonly' => true));
-		$this->assert_true($book->is_readonly());
+		$this->assertTrue($book->is_readonly());
 
 		try {
 			$book->save();
@@ -345,46 +345,46 @@ class ActiveRecordTest extends DatabaseTest
 		}
 
 		$book->name = 'some new name';
-		$this->assert_equals($book->name, 'some new name');
+		$this->assertEquals($book->name, 'some new name');
 	}
 
-	public function test_cast_when_using_setter()
+	public function testCastWhenUsingSetter()
 	{
 		$book = new Book();
 		$book->book_id = '1';
-		$this->assert_same(1,$book->book_id);
+		$this->assertSame(1,$book->book_id);
 	}
 
-	public function test_cast_when_loading()
+	public function testCastWhenLoading()
 	{
 		$book = Book::find(1);
-		$this->assert_same(1,$book->book_id);
-		$this->assert_same('Ancient Art of Main Tanking',$book->name);
+		$this->assertSame(1,$book->book_id);
+		$this->assertSame('Ancient Art of Main Tanking',$book->name);
 	}
 
-	public function test_cast_defaults()
+	public function testCastDefaults()
 	{
 		$book = new Book();
-		$this->assert_same(0.0,$book->special);
+		$this->assertSame(0.0,$book->special);
 	}
 
-	public function test_transaction_committed()
+	public function testTransactionCommitted()
 	{
 		$original = Author::count();
 		$ret = Author::transaction(function() { Author::create(array("name" => "blah")); });
-		$this->assert_equals($original+1,Author::count());
-		$this->assert_true($ret);
+		$this->assertEquals($original+1,Author::count());
+		$this->assertTrue($ret);
 	}
 	
-	public function test_transaction_committed_when_returning_true()
+	public function testTransactionCommittedWhenReturningTrue()
 	{
 		$original = Author::count();
 		$ret = Author::transaction(function() { Author::create(array("name" => "blah")); return true; });
-		$this->assert_equals($original+1,Author::count());
-		$this->assert_true($ret);
+		$this->assertEquals($original+1,Author::count());
+		$this->assertTrue($ret);
 	}
 	
-	public function test_transaction_rolledback_by_returning_false()
+	public function testTransactionRolledbackByReturningFalse()
 	{
 		$original = Author::count();
 		
@@ -394,11 +394,11 @@ class ActiveRecordTest extends DatabaseTest
 			return false;
 		});
 		
-		$this->assert_equals($original,Author::count());
-		$this->assert_false($ret);
+		$this->assertEquals($original,Author::count());
+		$this->assertFalse($ret);
 	}
 	
-	public function test_transaction_rolledback_by_throwing_exception()
+	public function testTransactionRolledbackByThrowingException()
 	{
 		$original = Author::count();
 		$exception = null;
@@ -416,293 +416,293 @@ class ActiveRecordTest extends DatabaseTest
 			$exception = $e;
 		}
 
-		$this->assert_not_null($exception);
-		$this->assert_equals($original,Author::count());
+		$this->assertNotNull($exception);
+		$this->assertEquals($original,Author::count());
 	}
 
-	public function test_delegate()
+	public function testDelegate()
 	{
 		$event = Event::first();
-		$this->assert_equals($event->venue->state,$event->state);
-		$this->assert_equals($event->venue->address,$event->address);
+		$this->assertEquals($event->venue->state,$event->state);
+		$this->assertEquals($event->venue->address,$event->address);
 	}
 
-	public function test_delegate_prefix()
+	public function testDelegatePrefix()
 	{
 		$event = Event::first();
-		$this->assert_equals($event->host->name,$event->woot_name);
+		$this->assertEquals($event->host->name,$event->woot_name);
 	}
 
-	public function test_delegate_returns_null_if_relationship_does_not_exist()
+	public function testDelegateReturnsNullIfRelationshipDoesNotExist()
 	{
 		$event = new Event();
-		$this->assert_null($event->state);
+		$this->assertNull($event->state);
 	}
 
-	public function test_delegate_set_attribute()
+	public function testDelegateSetAttribute()
 	{
 		$event = Event::first();
 		$event->state = 'MEXICO';
-		$this->assert_equals('MEXICO',$event->venue->state);
+		$this->assertEquals('MEXICO',$event->venue->state);
 	}
 
-	public function test_delegate_getter_gh_98()
+	public function testDelegateGetterGh98()
 	{
 		Venue::$use_custom_get_state_getter = true;
 
 		$event = Event::first();
-		$this->assert_equals('ny', $event->venue->state);
-		$this->assert_equals('ny', $event->state);
+		$this->assertEquals('ny', $event->venue->state);
+		$this->assertEquals('ny', $event->state);
 
 		Venue::$use_custom_get_state_getter = false;
 	}
 
-	public function test_delegate_setter_gh_98()
+	public function testDelegateSetterGh98()
 	{
 		Venue::$use_custom_set_state_setter = true;
 
 		$event = Event::first();
 		$event->state = 'MEXICO';
-		$this->assert_equals('MEXICO#',$event->venue->state);
+		$this->assertEquals('MEXICO#',$event->venue->state);
 
 		Venue::$use_custom_set_state_setter = false;
 	}
 
-	public function test_table_name_with_underscores()
+	public function testTableNameWithUnderscores()
 	{
-		$this->assert_not_null(AwesomePerson::first());
+		$this->assertNotNull(AwesomePerson::first());
 	}
 
-	public function test_model_should_default_as_new_record()
+	public function testModelShouldDefaultAsNewRecord()
 	{
 		$author = new Author();
-		$this->assert_true($author->is_new_record());
+		$this->assertTrue($author->is_new_record());
 	}
 
-	public function test_setter()
+	public function testSetter()
 	{
 		$author = new Author();
 		$author->password = 'plaintext';
-		$this->assert_equals(md5('plaintext'),$author->encrypted_password);
+		$this->assertEquals(md5('plaintext'),$author->encrypted_password);
 	}
 
-	public function test_setter_with_same_name_as_an_attribute()
+	public function testSetterWithSameNameAsAnAttribute()
 	{
 		$author = new Author();
 		$author->name = 'bob';
-		$this->assert_equals('BOB',$author->name);
+		$this->assertEquals('BOB',$author->name);
 	}
 
-	public function test_getter()
+	public function testGetter()
 	{
 		$book = Book::first();
-		$this->assert_equals(strtoupper($book->name), $book->upper_name);
+		$this->assertEquals(strtoupper($book->name), $book->upper_name);
 	}
 
-	public function test_getter_with_same_name_as_an_attribute()
+	public function testGetterWithSameNameAsAnAttribute()
 	{
 		Book::$use_custom_get_name_getter = true;
 		$book = new Book;
 		$book->name = 'bob';
-		$this->assert_equals('BOB', $book->name);
+		$this->assertEquals('BOB', $book->name);
 		Book::$use_custom_get_name_getter = false;
 	}
 
-	public function test_setting_invalid_date_should_set_date_to_null()
+	public function testSettingInvalidDateShouldSetDateToNull()
 	{
 		$author = new Author();
 		$author->created_at = 'CURRENT_TIMESTAMP';
 		$this->assertNull($author->created_at);
 	}
 
-	public function test_table_name()
+	public function testTableName()
 	{
-		$this->assert_equals('authors',Author::table_name());
+		$this->assertEquals('authors',Author::table_name());
 	}
 
 	/**
 	 * @expectedException ActiveRecord\ActiveRecordException
 	 */
-	public function test_undefined_instance_method()
+	public function testUndefinedInstanceMethod()
 	{
 		Author::first()->find_by_name('sdf');
 	}
 
-	public function test_clear_cache_for_specific_class()
+	public function testClearCacheForSpecificClass()
 	{
 		$book_table1 = ActiveRecord\Table::load('Book');
 		$book_table2 = ActiveRecord\Table::load('Book');
 		ActiveRecord\Table::clear_cache('Book');
 		$book_table3 = ActiveRecord\Table::load('Book');
 
-		$this->assert_true($book_table1 === $book_table2);
-		$this->assert_true($book_table1 !== $book_table3);
+		$this->assertTrue($book_table1 === $book_table2);
+		$this->assertTrue($book_table1 !== $book_table3);
 	}
 
-	public function test_flag_dirty()
+	public function testFlagDirty()
 	{
 		$author = new Author();
 		$author->flag_dirty('some_date');
-		$this->assert_has_keys('some_date', $author->dirty_attributes());
-		$this->assert_true($author->attribute_is_dirty('some_date'));
+		$this->assertHasKeys('some_date', $author->dirty_attributes());
+		$this->assertTrue($author->attribute_is_dirty('some_date'));
 		$author->save();
-		$this->assert_false($author->attribute_is_dirty('some_date'));
+		$this->assertFalse($author->attribute_is_dirty('some_date'));
 	}
 
-	public function test_flag_dirty_attribute_which_does_not_exit()
+	public function testFlagDirtyAttributeWhichDoesNotExit()
 	{
 		$author = new Author();
 		$author->flag_dirty('some_inexistant_property');
-		$this->assert_null($author->dirty_attributes());
-		$this->assert_false($author->attribute_is_dirty('some_inexistant_property'));
+		$this->assertNull($author->dirty_attributes());
+		$this->assertFalse($author->attribute_is_dirty('some_inexistant_property'));
 	}
 
-	public function test_gh245_dirty_attribute_should_not_raise_php_notice_if_not_dirty()
+	public function testGh245DirtyAttributeShouldNotRaisePhpNoticeIfNotDirty()
 	{
 		$event = new Event(array('title' => "Fun"));
-		$this->assert_false($event->attribute_is_dirty('description'));
-		$this->assert_true($event->attribute_is_dirty('title'));
+		$this->assertFalse($event->attribute_is_dirty('description'));
+		$this->assertTrue($event->attribute_is_dirty('title'));
 	}
 
-	public function test_attribute_is_not_flagged_dirty_if_assigning_same_value() {
+	public function testAttributeIsNotFlaggedDirtyIfAssigningSameValue() {
 		$event = Event::find(1);
 		$event->type = "Music";
-		$this->assert_false($event->attribute_is_dirty('type'));
+		$this->assertFalse($event->attribute_is_dirty('type'));
 	}
 
-	public function test_changed_attributes() {
+	public function testChangedAttributes() {
 		$event = Event::find(1);
 
 		$event->type = "Groovy Music";
 		$changed_attributes = $event->changed_attributes();
-		$this->assert_true(is_array($changed_attributes));
-		$this->assert_equals(1, count($changed_attributes));
-		$this->assert_true(isset($changed_attributes['type']));
-		$this->assert_equals("Music", $changed_attributes['type']);
+		$this->assertTrue(is_array($changed_attributes));
+		$this->assertEquals(1, count($changed_attributes));
+		$this->assertTrue(isset($changed_attributes['type']));
+		$this->assertEquals("Music", $changed_attributes['type']);
 
 		$event->type = "Funky Music";
 		$changed_attributes = $event->changed_attributes();
-		$this->assert_true(is_array($changed_attributes));
-		$this->assert_equals(1, count($changed_attributes));
-		$this->assert_true(isset($changed_attributes['type']));
-		$this->assert_equals("Music", $changed_attributes['type']);
+		$this->assertTrue(is_array($changed_attributes));
+		$this->assertEquals(1, count($changed_attributes));
+		$this->assertTrue(isset($changed_attributes['type']));
+		$this->assertEquals("Music", $changed_attributes['type']);
 	}
 
-	public function test_changes() {
+	public function testChanges() {
 		$event = Event::find(1);
 
 		$event->type = "Groovy Music";
 		$changes = $event->changes();
-		$this->assert_true(is_array($changes));
-		$this->assert_equals(1, count($changes));
-		$this->assert_true(isset($changes['type']));
-		$this->assert_true(is_array($changes['type']));
-		$this->assert_equals("Music", $changes['type'][0]);
-		$this->assert_equals("Groovy Music", $changes['type'][1]);
+		$this->assertTrue(is_array($changes));
+		$this->assertEquals(1, count($changes));
+		$this->assertTrue(isset($changes['type']));
+		$this->assertTrue(is_array($changes['type']));
+		$this->assertEquals("Music", $changes['type'][0]);
+		$this->assertEquals("Groovy Music", $changes['type'][1]);
 
 		$event->type = "Funky Music";
 		$changes = $event->changes();
-		$this->assert_true(is_array($changes));
-		$this->assert_equals(1, count($changes));
-		$this->assert_true(isset($changes['type']));
-		$this->assert_true(is_array($changes['type']));
-		$this->assert_equals("Music", $changes['type'][0]);
-		$this->assert_equals("Funky Music", $changes['type'][1]);
+		$this->assertTrue(is_array($changes));
+		$this->assertEquals(1, count($changes));
+		$this->assertTrue(isset($changes['type']));
+		$this->assertTrue(is_array($changes['type']));
+		$this->assertEquals("Music", $changes['type'][0]);
+		$this->assertEquals("Funky Music", $changes['type'][1]);
 	}
 
-	public function test_attribute_was() {
+	public function testAttributeWas() {
 		$event = Event::find(1);
 		$event->type = "Funky Music";
-		$this->assert_equals("Music", $event->attribute_was("type"));
+		$this->assertEquals("Music", $event->attribute_was("type"));
 		$event->type = "Groovy Music";
-		$this->assert_equals("Music", $event->attribute_was("type"));
+		$this->assertEquals("Music", $event->attribute_was("type"));
 	}
 
-	public function test_previous_changes() {
+	public function testPreviousChanges() {
 		$event = Event::find(1);
 		$event->type = "Groovy Music";
 		$previous_changes = $event->previous_changes();
-		$this->assert_true(empty($previous_changes));
+		$this->assertTrue(empty($previous_changes));
 		$event->save();
 		$previous_changes = $event->previous_changes();
-		$this->assert_true(is_array($previous_changes));
-		$this->assert_equals(1, count($previous_changes));
-		$this->assert_true(isset($previous_changes['type']));
-		$this->assert_true(is_array($previous_changes['type']));
-		$this->assert_equals("Music", $previous_changes['type'][0]);
-		$this->assert_equals("Groovy Music", $previous_changes['type'][1]);
+		$this->assertTrue(is_array($previous_changes));
+		$this->assertEquals(1, count($previous_changes));
+		$this->assertTrue(isset($previous_changes['type']));
+		$this->assertTrue(is_array($previous_changes['type']));
+		$this->assertEquals("Music", $previous_changes['type'][0]);
+		$this->assertEquals("Groovy Music", $previous_changes['type'][1]);
 	}
 
-	public function test_save_resets_changed_attributes() {
+	public function testSaveResetsChangedAttributes() {
 		$event = Event::find(1);
 		$event->type = "Groovy Music";
 		$event->save();
 		$changed_attributes = $event->changed_attributes();
-		$this->assert_true(empty($changed_attributes));
+		$this->assertTrue(empty($changed_attributes));
 	}
 
-	public function test_changing_datetime_attribute_tracks_change() {
+	public function testChangingDatetimeAttributeTracksChange() {
 		$author = new Author();
 		$author->created_at = $original = new \DateTime("yesterday");
 		$author->created_at = $now = new \DateTime();
 		$changes = $author->changes();
-		$this->assert_true(isset($changes['created_at']));
-		$this->assert_datetime_equals($original, $changes['created_at'][0]);
-		$this->assert_datetime_equals($now, $changes['created_at'][1]);
+		$this->assertTrue(isset($changes['created_at']));
+		$this->assertDatetimeEquals($original, $changes['created_at'][0]);
+		$this->assertDatetimeEquals($now, $changes['created_at'][1]);
 	}
 
-	public function test_changing_empty_attribute_value_tracks_change() {
+	public function testChangingEmptyAttributeValueTracksChange() {
 		$event = new Event();
 		$event->description = "The most fun";
 		$changes = $event->changes();
-		$this->assert_true(array_key_exists("description", $changes));
-		$this->assert_equals("", $changes['description'][0]);
-		$this->assert_equals("The most fun", $changes['description'][1]);
+		$this->assertTrue(array_key_exists("description", $changes));
+		$this->assertEquals("", $changes['description'][0]);
+		$this->assertEquals("The most fun", $changes['description'][1]);
 	}
 
-	public function test_assigning_php_datetime_gets_converted_to_date_class_with_defaults()
+	public function testAssigningPhpDatetimeGetsConvertedToDateClassWithDefaults()
 	{
 		$author = new Author();
 		$author->created_at = $now = new \DateTime();
-		$this->assert_is_a("ActiveRecord\\DateTime", $author->created_at);
-		$this->assert_datetime_equals($now,$author->created_at);
+		$this->assertIsA("ActiveRecord\\DateTime", $author->created_at);
+		$this->assertDatetimeEquals($now,$author->created_at);
 	}
 
-	public function test_assigning_php_datetime_gets_converted_to_date_class_with_custom_date_class()
+	public function testAssigningPhpDatetimeGetsConvertedToDateClassWithCustomDateClass()
 	{
 		ActiveRecord\Config::instance()->set_date_class('\\DateTime'); // use PHP built-in DateTime
 		$author = new Author();
 		$author->created_at = $now = new \DateTime();
-		$this->assert_is_a("DateTime", $author->created_at);
-		$this->assert_datetime_equals($now,$author->created_at);
+		$this->assertIsA("DateTime", $author->created_at);
+		$this->assertDatetimeEquals($now,$author->created_at);
 	}
 
-	public function test_assigning_from_mass_assignment_php_datetime_gets_converted_to_ar_datetime()
+	public function testAssigningFromMassAssignmentPhpDatetimeGetsConvertedToArDatetime()
 	{
 		$author = new Author(array('created_at' => new \DateTime()));
-		$this->assert_is_a("ActiveRecord\\DateTime",$author->created_at);
+		$this->assertIsA("ActiveRecord\\DateTime",$author->created_at);
 	}
 
-	public function test_get_real_attribute_name()
+	public function testGetRealAttributeName()
 	{
 		$venue = new Venue();
-		$this->assert_equals('name', $venue->get_real_attribute_name('name'));
-		$this->assert_equals('name', $venue->get_real_attribute_name('marquee'));
-		$this->assert_equals(null, $venue->get_real_attribute_name('invalid_field'));
+		$this->assertEquals('name', $venue->get_real_attribute_name('name'));
+		$this->assertEquals('name', $venue->get_real_attribute_name('marquee'));
+		$this->assertEquals(null, $venue->get_real_attribute_name('invalid_field'));
 	}
 
-	public function test_id_setter_works_with_table_without_pk_named_attribute()
+	public function testIdSetterWorksWithTableWithoutPkNamedAttribute()
 	{
 		$author = new Author(array('id' => 123));
-		$this->assert_equals(123,$author->author_id);
+		$this->assertEquals(123,$author->author_id);
 	}
 
-	public function test_query()
+	public function testQuery()
 	{
 		$row = Author::query('SELECT COUNT(*) AS n FROM authors',null)->fetch();
-		$this->assert_true($row['n'] > 1);
+		$this->assertTrue($row['n'] > 1);
 
 		$row = Author::query('SELECT COUNT(*) AS n FROM authors WHERE name=?',array('Tito'))->fetch();
-		$this->assert_equals(array('n' => 1), $row);
+		$this->assertEquals(array('n' => 1), $row);
 	}
 }

@@ -3,18 +3,18 @@ use ActiveRecord\Cache;
 
 class CacheModelTest extends DatabaseTest
 {
-	public function set_up($connection_name=null)
+	public function setUp($connection_name=null)
 	{
 		if (!extension_loaded('memcache'))
 		{
 			$this->markTestSkipped('The memcache extension is not available');
 			return;
 		}
-		parent::set_up($connection_name);
+		parent::setUp($connection_name);
 		ActiveRecord\Config::instance()->set_cache('memcache://localhost');
 	}
 
-	protected static function set_method_public($className, $methodName)
+	protected static function setMethodPublic($className, $methodName)
 	{
 		$class = new ReflectionClass($className);
 		$method = $class->getMethod($methodName);
@@ -22,48 +22,48 @@ class CacheModelTest extends DatabaseTest
 		return $method;
 	}
 
-	public function tear_down()
+	public function tearDown()
 	{
 		Cache::flush();
 		Cache::initialize(null);
 	}
 
-	public function test_default_expire()
+	public function testDefaultExpire()
 	{
-		$this->assert_equals(30,Author::table()->cache_model_expire);
+		$this->assertEquals(30,Author::table()->cache_model_expire);
 	}
 
-	public function test_explicit_expire()
+	public function testExplicitExpire()
 	{
-		$this->assert_equals(2592000,Publisher::table()->cache_model_expire);
+		$this->assertEquals(2592000,Publisher::table()->cache_model_expire);
 	}
 
-	public function test_cache_key()
+	public function testCacheKey()
 	{
-		$method = $this->set_method_public('Author', 'cache_key');
+		$method = $this->setMethodPublic('Author', 'cache_key');
 		$author = Author::first();
 
-		$this->assert_equals("Author-1", $method->invokeArgs($author, array()));
+		$this->assertEquals("Author-1", $method->invokeArgs($author, array()));
 	}
 
-	public function test_model_cache_find_by_pk()
+	public function testModelCacheFindByPk()
 	{
 		$publisher = Publisher::find(1);
-		$method = $this->set_method_public('Publisher', 'cache_key');
+		$method = $this->setMethodPublic('Publisher', 'cache_key');
 		$cache_key = $method->invokeArgs($publisher, array());
 		$from_cache = Cache::$adapter->read($cache_key);
 
 		$this->assertEquals($publisher->name, $from_cache->name);
 	}
 
-	public function test_model_cache_new()
+	public function testModelCacheNew()
 	{
 		$publisher = new Publisher(array(
 			'name' => 'HarperCollins'
 		));
 		$publisher->save();
 
-		$method = $this->set_method_public('Publisher', 'cache_key');
+		$method = $this->setMethodPublic('Publisher', 'cache_key');
 		$cache_key = $method->invokeArgs($publisher, array());
 
 		// Model is cached on first find
@@ -73,9 +73,9 @@ class CacheModelTest extends DatabaseTest
 		$this->assertEquals($actual, $from_cache);
 	}
 
-	public function test_model_cache_find()
+	public function testModelCacheFind()
 	{
-		$method = $this->set_method_public('Publisher', 'cache_key');
+		$method = $this->setMethodPublic('Publisher', 'cache_key');
 		$publishers = Publisher::all();
 
 		foreach($publishers as $publisher)
@@ -87,17 +87,17 @@ class CacheModelTest extends DatabaseTest
 		}
 	}
 
-	public function test_regular_models_not_cached()
+	public function testRegularModelsNotCached()
 	{
-		$method = $this->set_method_public('Author', 'cache_key');
+		$method = $this->setMethodPublic('Author', 'cache_key');
 		$author = Author::first();
 		$cache_key = $method->invokeArgs($author, array());
 		$this->assertFalse(Cache::$adapter->read($cache_key));
 	}
 
-	public function test_model_delete_from_cache()
+	public function testModelDeleteFromCache()
 	{
-		$method = $this->set_method_public('Publisher', 'cache_key');
+		$method = $this->setMethodPublic('Publisher', 'cache_key');
 		$publisher = Publisher::find(1);
 		$cache_key = $method->invokeArgs($publisher, array());
 
@@ -108,8 +108,8 @@ class CacheModelTest extends DatabaseTest
 
 	}
 
-	public function test_model_update_cache(){
-		$method = $this->set_method_public('Publisher', 'cache_key');
+	public function testModelUpdateCache(){
+		$method = $this->setMethodPublic('Publisher', 'cache_key');
 
 		$publisher = Publisher::find(1);
 		$cache_key = $method->invokeArgs($publisher, array());
@@ -128,8 +128,8 @@ class CacheModelTest extends DatabaseTest
 		$this->assertEquals('Puppy Publishing', $from_cache->name);
 	}
 
-	public function test_model_reload_expires_cache(){
-		$method = $this->set_method_public('Publisher', 'cache_key');
+	public function testModelReloadExpiresCache(){
+		$method = $this->setMethodPublic('Publisher', 'cache_key');
 
 		$publisher = Publisher::find(1);
 		$cache_key = $method->invokeArgs($publisher, array());

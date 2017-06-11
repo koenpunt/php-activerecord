@@ -9,65 +9,65 @@ class BookOn extends ActiveRecord\Model
 
 class ValidatesOnSaveCreateUpdateTest extends DatabaseTest{
 
-	public function test_validations_only_run_on_create()
+	public function testValidationsOnlyRunOnCreate()
 	{
 		BookOn::$validates_presence_of[0] = array('name', 'on' => 'create');
 		$book = new BookOn();
-		$this->assert_false($book->is_valid());
+		$this->assertFalse($book->is_valid());
 		
 		$book->secondary_author_id = 1;
-		$this->assert_false( $book->save() );
+		$this->assertFalse( $book->save() );
 		
 		$book->name = 'Baz';
-		$this->assert_true( $book->save() );
+		$this->assertTrue( $book->save() );
 		
 		$book->name = null;
-		$this->assert_true( $book->save() );
+		$this->assertTrue( $book->save() );
 	}
 
-	public function test_validations_only_run_on_update()
+	public function testValidationsOnlyRunOnUpdate()
 	{
 		BookOn::$validates_presence_of[0] = array('name', 'on' => 'update');
 		$book = new BookOn();
-		$this->assert_true($book->save());
+		$this->assertTrue($book->save());
 		
 		$book->name = null;
-		$this->assert_false( $book->save() );
+		$this->assertFalse( $book->save() );
 		
 		$book->name = 'Baz';
-		$this->assert_true( $book->save() );
+		$this->assertTrue( $book->save() );
 	}
 
-	public function test_validations_only_run_on_save()
+	public function testValidationsOnlyRunOnSave()
 	{
 		BookOn::$validates_presence_of[0] = array('name', 'on' => 'save');
 		$book = new BookOn();
-		$this->assert_false($book->is_valid());
+		$this->assertFalse($book->is_valid());
 		
 		$book->secondary_author_id = 1;
-		$this->assert_false( $book->save() );
+		$this->assertFalse( $book->save() );
 		
 		$book->name = 'Baz';
-		$this->assert_true( $book->save() );
+		$this->assertTrue( $book->save() );
 		
 		$book->name = null;
-		$this->assert_false( $book->save() );
+		$this->assertFalse( $book->save() );
 	}
 
-	public function test_validations_run_always_without_on()
+	public function testValidationsRunAlwaysWithoutOn()
 	{
 		BookOn::$validates_presence_of[0] = array('name');
 		$book = new BookOn();
-		$this->assert_false($book->is_valid());
+		$this->assertFalse($book->is_valid());
 		
 		$book->secondary_author_id = 1;
-		$this->assert_false( $book->save() );
+		$this->assertFalse( $book->save() );
 		
 		$book->name = 'Baz';
-		$this->assert_true( $book->save() );
+		$this->assertTrue( $book->save() );
 		
 		$book->name = null;
-		$this->assert_false( $book->save() );
+		$this->assertFalse( $book->save() );
 	}
 	
 }
