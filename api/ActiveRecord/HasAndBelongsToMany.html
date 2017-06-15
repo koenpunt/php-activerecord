@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>ActiveRecord\HasAndBelongsToMany | PHP ActiveRecord</title>
+
+            <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../css/sami.css">
+        <script src="../js/jquery-1.11.1.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script src="../js/typeahead.min.js"></script>
+        <script src="../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:ActiveRecord_HasAndBelongsToMany" data-root-path="../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../index.html">PHP ActiveRecord</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../classes.html">Classes</a></li>
+                                            <li><a href="../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../interfaces.html">Interfaces</a></li>
+                    <li><a href="../traits.html">Traits</a></li>
+                    <li><a href="../doc-index.html">Index</a></li>
+                    <li><a href="../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../ActiveRecord.html">ActiveRecord</a></li><li class="backslash">\</li><li>HasAndBelongsToMany</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            HasAndBelongsToMany
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>HasAndBelongsToMany</strong>        extends <a href="../ActiveRecord/AbstractRelationship.html"><abbr title="ActiveRecord\AbstractRelationship">AbstractRelationship</abbr></a>        (<a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Relationship.php">View source</a>)
+</p>
+
+        
+    
+
+    
+    
+    
+            <h2>Properties</h2>
+
+            <table class="table table-condensed">
+                    <tr>
+                <td class="type" id="property_attribute_name">
+                                                                                string
+                </td>
+                <td>$attribute_name</td>
+                <td class="last">Name to be used that will trigger call to the relationship.</td>
+                <td><small>from&nbsp;<a href="../ActiveRecord/AbstractRelationship.html#property_attribute_name"><abbr title="ActiveRecord\AbstractRelationship">AbstractRelationship</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_class_name">
+                                                                                string
+                </td>
+                <td>$class_name</td>
+                <td class="last">Class name of the associated model.</td>
+                <td><small>from&nbsp;<a href="../ActiveRecord/AbstractRelationship.html#property_class_name"><abbr title="ActiveRecord\AbstractRelationship">AbstractRelationship</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_foreign_key">
+                                                                                string
+                </td>
+                <td>$foreign_key</td>
+                <td class="last">Name of the foreign key.</td>
+                <td><small>from&nbsp;<a href="../ActiveRecord/AbstractRelationship.html#property_foreign_key"><abbr title="ActiveRecord\AbstractRelationship">AbstractRelationship</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_options">
+                                        protected                                        array
+                </td>
+                <td>$options</td>
+                <td class="last">Options of the relationship.</td>
+                <td><small>from&nbsp;<a href="../ActiveRecord/AbstractRelationship.html#property_options"><abbr title="ActiveRecord\AbstractRelationship">AbstractRelationship</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_poly_relationship">
+                                        protected                                        boolean
+                </td>
+                <td>$poly_relationship</td>
+                <td class="last">Is the relationship single or multi.</td>
+                <td><small>from&nbsp;<a href="../ActiveRecord/AbstractRelationship.html#property_poly_relationship"><abbr title="ActiveRecord\AbstractRelationship">AbstractRelationship</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_valid_association_options">
+                    static                    protected                                        array
+                </td>
+                <td>$valid_association_options</td>
+                <td class="last">List of valid options for relationships.</td>
+                <td><small>from&nbsp;<a href="../ActiveRecord/AbstractRelationship.html#property_valid_association_options"><abbr title="ActiveRecord\AbstractRelationship">AbstractRelationship</abbr></a></small></td>
+            </tr>
+            </table>
+
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>($options = array())
+        
+                                            <p>Constructs a relationship.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_get_table">get_table</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../ActiveRecord/AbstractRelationship.html#method_get_table"><abbr title="ActiveRecord\AbstractRelationship">AbstractRelationship</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_is_poly">is_poly</a>()
+        
+                                            <p>What is this relationship's cardinality?</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../ActiveRecord/AbstractRelationship.html#method_is_poly"><abbr title="ActiveRecord\AbstractRelationship">AbstractRelationship</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    void
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_query_and_attach_related_models_eagerly">query_and_attach_related_models_eagerly</a>(<a href="../ActiveRecord/Table.html"><abbr title="ActiveRecord\Table">Table</abbr></a> $table, $models, $attributes, $includes = array(), $query_keys = array(), $model_values_keys = array())
+        
+                                            <p>Eagerly loads relationships for $models.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../ActiveRecord/AbstractRelationship.html#method_query_and_attach_related_models_eagerly"><abbr title="ActiveRecord\AbstractRelationship">AbstractRelationship</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_build_association">build_association</a>(<a href="../ActiveRecord/Model.html"><abbr title="ActiveRecord\Model">Model</abbr></a> $model, $attributes = array(), $guard_attributes = true)
+        
+                                            <p>Creates a new instance of specified {@link Model} with the attributes pre-loaded.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../ActiveRecord/AbstractRelationship.html#method_build_association"><abbr title="ActiveRecord\AbstractRelationship">AbstractRelationship</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_create_association">create_association</a>(<a href="../ActiveRecord/Model.html"><abbr title="ActiveRecord\Model">Model</abbr></a> $model, $attributes = array(), $guard_attributes = true)
+        
+                                            <p>Creates a new instance of {@link Model} and invokes save.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../ActiveRecord/AbstractRelationship.html#method_create_association"><abbr title="ActiveRecord\AbstractRelationship">AbstractRelationship</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_append_record_to_associate">append_record_to_associate</a>(<a href="../ActiveRecord/Model.html"><abbr title="ActiveRecord\Model">Model</abbr></a> $associate, <a href="../ActiveRecord/Model.html"><abbr title="ActiveRecord\Model">Model</abbr></a> $record)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../ActiveRecord/AbstractRelationship.html#method_append_record_to_associate"><abbr title="ActiveRecord\AbstractRelationship">AbstractRelationship</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_merge_association_options">merge_association_options</a>($options)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../ActiveRecord/AbstractRelationship.html#method_merge_association_options"><abbr title="ActiveRecord\AbstractRelationship">AbstractRelationship</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_unset_non_finder_options">unset_non_finder_options</a>($options)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../ActiveRecord/AbstractRelationship.html#method_unset_non_finder_options"><abbr title="ActiveRecord\AbstractRelationship">AbstractRelationship</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    void
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_set_inferred_class_name">set_inferred_class_name</a>()
+        
+                                            <p>Infers the $this->class_name based on $this->attribute_name.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../ActiveRecord/AbstractRelationship.html#method_set_inferred_class_name"><abbr title="ActiveRecord\AbstractRelationship">AbstractRelationship</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_set_class_name">set_class_name</a>($class_name)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../ActiveRecord/AbstractRelationship.html#method_set_class_name"><abbr title="ActiveRecord\AbstractRelationship">AbstractRelationship</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_create_conditions_from_keys">create_conditions_from_keys</a>(<a href="../ActiveRecord/Model.html"><abbr title="ActiveRecord\Model">Model</abbr></a> $model, $condition_keys = array(), $value_keys = array())
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../ActiveRecord/AbstractRelationship.html#method_create_conditions_from_keys"><abbr title="ActiveRecord\AbstractRelationship">AbstractRelationship</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_construct_inner_join_sql">construct_inner_join_sql</a>(<a href="../ActiveRecord/Table.html"><abbr title="ActiveRecord\Table">Table</abbr></a> $from_table, bool $using_through = false, string $alias = null)
+        
+                                            <p>Creates INNER JOIN SQL for associations.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../ActiveRecord/AbstractRelationship.html#method_construct_inner_join_sql"><abbr title="ActiveRecord\AbstractRelationship">AbstractRelationship</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_load">load</a>(<a href="../ActiveRecord/Model.html"><abbr title="ActiveRecord\Model">Model</abbr></a> $model)
+        
+                                            <p>This will load the related model data.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Relationship.php#L640">line 640</a></div>
+        <code>                    
+    <strong>__construct</strong>($options = array())
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Constructs a relationship.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$options</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_get_table">
+        <div class="location">in <a href="../ActiveRecord/AbstractRelationship.html#method_get_table"><abbr title="ActiveRecord\AbstractRelationship">AbstractRelationship</abbr></a> at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Relationship.php#L99">line 99</a></div>
+        <code>            protected        
+    <strong>get_table</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_is_poly">
+        <div class="location">in <a href="../ActiveRecord/AbstractRelationship.html#method_is_poly"><abbr title="ActiveRecord\AbstractRelationship">AbstractRelationship</abbr></a> at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Relationship.php#L109">line 109</a></div>
+        <code>                    bool
+    <strong>is_poly</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>What is this relationship's cardinality?</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_query_and_attach_related_models_eagerly">
+        <div class="location">in <a href="../ActiveRecord/AbstractRelationship.html#method_query_and_attach_related_models_eagerly"><abbr title="ActiveRecord\AbstractRelationship">AbstractRelationship</abbr></a> at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Relationship.php#L129">line 129</a></div>
+        <code>            protected        void
+    <strong>query_and_attach_related_models_eagerly</strong>(<a href="../ActiveRecord/Table.html"><abbr title="ActiveRecord\Table">Table</abbr></a> $table, $models, $attributes, $includes = array(), $query_keys = array(), $model_values_keys = array())
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Eagerly loads relationships for $models.</p>                    <p>This method takes an array of models, collects PK or FK (whichever is needed for relationship), then queries
+the related table by PK/FK and attaches the array of returned relationships to the appropriately named relationship on
+$models.</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../ActiveRecord/Table.html"><abbr title="ActiveRecord\Table">Table</abbr></a></td>
+                <td>$table</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$models</td>
+                <td>array of model objects</td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$attributes</td>
+                <td>array of attributes from $models</td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$includes</td>
+                <td>array of eager load directives</td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$query_keys</td>
+                <td>-> key(s) to be queried for on included/related table</td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$model_values_keys</td>
+                <td>-> key(s)/value(s) to be used in query from model which is including</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>void</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_build_association">
+        <div class="location">in <a href="../ActiveRecord/AbstractRelationship.html#method_build_association"><abbr title="ActiveRecord\AbstractRelationship">AbstractRelationship</abbr></a> at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Relationship.php#L222">line 222</a></div>
+        <code>                    
+    <strong>build_association</strong>(<a href="../ActiveRecord/Model.html"><abbr title="ActiveRecord\Model">Model</abbr></a> $model, $attributes = array(), $guard_attributes = true)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Creates a new instance of specified {@link Model} with the attributes pre-loaded.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../ActiveRecord/Model.html"><abbr title="ActiveRecord\Model">Model</abbr></a></td>
+                <td>$model</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$attributes</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$guard_attributes</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_create_association">
+        <div class="location">in <a href="../ActiveRecord/AbstractRelationship.html#method_create_association"><abbr title="ActiveRecord\AbstractRelationship">AbstractRelationship</abbr></a> at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Relationship.php#L235">line 235</a></div>
+        <code>                    
+    <strong>create_association</strong>(<a href="../ActiveRecord/Model.html"><abbr title="ActiveRecord\Model">Model</abbr></a> $model, $attributes = array(), $guard_attributes = true)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Creates a new instance of {@link Model} and invokes save.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../ActiveRecord/Model.html"><abbr title="ActiveRecord\Model">Model</abbr></a></td>
+                <td>$model</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$attributes</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$guard_attributes</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_append_record_to_associate">
+        <div class="location">in <a href="../ActiveRecord/AbstractRelationship.html#method_append_record_to_associate"><abbr title="ActiveRecord\AbstractRelationship">AbstractRelationship</abbr></a> at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Relationship.php#L242">line 242</a></div>
+        <code>            protected        
+    <strong>append_record_to_associate</strong>(<a href="../ActiveRecord/Model.html"><abbr title="ActiveRecord\Model">Model</abbr></a> $associate, <a href="../ActiveRecord/Model.html"><abbr title="ActiveRecord\Model">Model</abbr></a> $record)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../ActiveRecord/Model.html"><abbr title="ActiveRecord\Model">Model</abbr></a></td>
+                <td>$associate</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><a href="../ActiveRecord/Model.html"><abbr title="ActiveRecord\Model">Model</abbr></a></td>
+                <td>$record</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_merge_association_options">
+        <div class="location">in <a href="../ActiveRecord/AbstractRelationship.html#method_merge_association_options"><abbr title="ActiveRecord\AbstractRelationship">AbstractRelationship</abbr></a> at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Relationship.php#L254">line 254</a></div>
+        <code>            protected        
+    <strong>merge_association_options</strong>($options)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$options</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_unset_non_finder_options">
+        <div class="location">in <a href="../ActiveRecord/AbstractRelationship.html#method_unset_non_finder_options"><abbr title="ActiveRecord\AbstractRelationship">AbstractRelationship</abbr></a> at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Relationship.php#L265">line 265</a></div>
+        <code>            protected        
+    <strong>unset_non_finder_options</strong>($options)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$options</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_set_inferred_class_name">
+        <div class="location">in <a href="../ActiveRecord/AbstractRelationship.html#method_set_inferred_class_name"><abbr title="ActiveRecord\AbstractRelationship">AbstractRelationship</abbr></a> at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Relationship.php#L283">line 283</a></div>
+        <code>            protected        void
+    <strong>set_inferred_class_name</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Infers the $this->class_name based on $this->attribute_name.</p>                    <p>Will try to guess the appropriate class by singularizing and uppercasing $this->attribute_name.</p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>void</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                            <h4>See also</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>attribute_name</td>
+                <td></td>
+            </tr>
+            </table>
+
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_set_class_name">
+        <div class="location">in <a href="../ActiveRecord/AbstractRelationship.html#method_set_class_name"><abbr title="ActiveRecord\AbstractRelationship">AbstractRelationship</abbr></a> at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Relationship.php#L289">line 289</a></div>
+        <code>            protected        
+    <strong>set_class_name</strong>($class_name)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$class_name</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_create_conditions_from_keys">
+        <div class="location">in <a href="../ActiveRecord/AbstractRelationship.html#method_create_conditions_from_keys"><abbr title="ActiveRecord\AbstractRelationship">AbstractRelationship</abbr></a> at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Relationship.php#L303">line 303</a></div>
+        <code>            protected        
+    <strong>create_conditions_from_keys</strong>(<a href="../ActiveRecord/Model.html"><abbr title="ActiveRecord\Model">Model</abbr></a> $model, $condition_keys = array(), $value_keys = array())
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../ActiveRecord/Model.html"><abbr title="ActiveRecord\Model">Model</abbr></a></td>
+                <td>$model</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$condition_keys</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$value_keys</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_construct_inner_join_sql">
+        <div class="location">in <a href="../ActiveRecord/AbstractRelationship.html#method_construct_inner_join_sql"><abbr title="ActiveRecord\AbstractRelationship">AbstractRelationship</abbr></a> at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Relationship.php#L331">line 331</a></div>
+        <code>                    string
+    <strong>construct_inner_join_sql</strong>(<a href="../ActiveRecord/Table.html"><abbr title="ActiveRecord\Table">Table</abbr></a> $from_table, bool $using_through = false, string $alias = null)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Creates INNER JOIN SQL for associations.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../ActiveRecord/Table.html"><abbr title="ActiveRecord\Table">Table</abbr></a></td>
+                <td>$from_table</td>
+                <td>the table used for the FROM SQL statement</td>
+            </tr>
+                    <tr>
+                <td>bool</td>
+                <td>$using_through</td>
+                <td>is this a THROUGH relationship?</td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$alias</td>
+                <td>a table alias for when a table is being joined twice</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td>SQL INNER JOIN fragment</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_load">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Relationship.php#L651">line 651</a></div>
+        <code>                    
+    <strong>load</strong>(<a href="../ActiveRecord/Model.html"><abbr title="ActiveRecord\Model">Model</abbr></a> $model)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>This will load the related model data.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../ActiveRecord/Model.html"><abbr title="ActiveRecord\Model">Model</abbr></a></td>
+                <td>$model</td>
+                <td>The model this relationship belongs to</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

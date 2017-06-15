@@ -1,0 +1,3566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>ActiveRecord\Model | PHP ActiveRecord</title>
+
+            <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../css/sami.css">
+        <script src="../js/jquery-1.11.1.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script src="../js/typeahead.min.js"></script>
+        <script src="../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:ActiveRecord_Model" data-root-path="../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../index.html">PHP ActiveRecord</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../classes.html">Classes</a></li>
+                                            <li><a href="../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../interfaces.html">Interfaces</a></li>
+                    <li><a href="../traits.html">Traits</a></li>
+                    <li><a href="../doc-index.html">Index</a></li>
+                    <li><a href="../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../ActiveRecord.html">ActiveRecord</a></li><li class="backslash">\</li><li>Model</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            Model
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>Model</strong>        (<a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php">View source</a>)
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>The base class for your models.</p>            <p>Defining an ActiveRecord model for a table called people and orders:</p>
+
+<p><code>
+CREATE TABLE people(
+  id int primary key auto_increment,
+  parent_id int,
+  first_name varchar(50),
+  last_name varchar(50)
+);</p>
+
+<p>CREATE TABLE orders(
+  id int primary key auto_increment,
+  person_id int not null,
+  cost decimal(10,2),
+  total decimal(10,2)
+);
+</code></p>
+
+<p><code>
+class Person extends ActiveRecord\Model {
+  static $belongs_to = array(
+    array('parent', 'foreign_key' => 'parent_id', 'class_name' => 'Person')
+  );</p>
+
+<p>static $has_many = array(
+    array('children', 'foreign_key' => 'parent_id', 'class_name' => 'Person'),
+    array('orders')
+  );</p>
+
+<p>static $validates_length_of = array(
+    array('first_name', 'within' => array(1,50)),
+    array('last_name', 'within' => array(1,50))
+  );
+}</p>
+
+<p>class Order extends ActiveRecord\Model {
+  static $belongs_to = array(
+    array('person')
+  );</p>
+
+<p>static $validates_numericality_of = array(
+    array('cost', 'greater_than' => 0),
+    array('total', 'greater_than' => 0)
+  );</p>
+
+<p>static $before_save = array('calculate_total_with_tax');</p>
+
+<p>public function calculate_total_with_tax() {
+    $this->total = $this->cost * 0.045;
+  }
+}
+</code></p>
+
+<p>For a more in-depth look at defining models, relationships, callbacks and many other things
+please consult our {@link http://www.phpactiverecord.org/guides Guides}.</p>                    </div>
+    
+    
+    
+            <h2>Properties</h2>
+
+            <table class="table table-condensed">
+                    <tr>
+                <td class="type" id="property_errors">
+                                                                                <a href="../ActiveRecord/Errors.html"><abbr title="ActiveRecord\Errors">Errors</abbr></a>
+                </td>
+                <td>$errors</td>
+                <td class="last">An instance of {@link Errors} and will be instantiated once a write method is called.</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_connection">
+                    static                                                            string
+                </td>
+                <td>$connection</td>
+                <td class="last">Set to the name of the connection this {@link Model} should use.</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_db">
+                    static                                                            string
+                </td>
+                <td>$db</td>
+                <td class="last">Set to the name of the database this Model's table is in.</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_table_name">
+                    static                                                            string
+                </td>
+                <td>$table_name</td>
+                <td class="last">Set this to explicitly specify the model's table name if different from inferred name.</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_primary_key">
+                    static                                                            string
+                </td>
+                <td>$primary_key</td>
+                <td class="last">Set this to override the default primary key name if different from default name of "id".</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_sequence">
+                    static                                                            string
+                </td>
+                <td>$sequence</td>
+                <td class="last">Set this to explicitly specify the sequence name for the table.</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_cache">
+                    static                                                            
+                </td>
+                <td>$cache</td>
+                <td class="last">Set this to true in your subclass to use caching for this model.</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_cache_expire">
+                    static                                                            integer
+                </td>
+                <td>$cache_expire</td>
+                <td class="last">Set this to specify an expiration period for this model.</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_alias_attribute">
+                    static                                                            array
+                </td>
+                <td>$alias_attribute</td>
+                <td class="last">Allows you to create aliases for attributes.</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_attr_accessible">
+                    static                                                            array
+                </td>
+                <td>$attr_accessible</td>
+                <td class="last">Whitelist of attributes that are checked from mass-assignment calls such as constructing a model or using update_attributes.</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_attr_protected">
+                    static                                                            array
+                </td>
+                <td>$attr_protected</td>
+                <td class="last">Blacklist of attributes that cannot be mass-assigned.</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_delegate">
+                    static                                                            array
+                </td>
+                <td>$delegate</td>
+                <td class="last">Delegates calls to a relationship.</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_VALID_OPTIONS">
+                    static                                                            array
+                </td>
+                <td>$VALID_OPTIONS</td>
+                <td class="last">A list of valid finder options.</td>
+                <td></td>
+            </tr>
+            </table>
+
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../ActiveRecord/Model.html"><abbr title="ActiveRecord\Model">Model</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>(array $attributes = array(), boolean $guard_attributes = true, boolean $instantiating_via_find = false, boolean $new_record = true)
+        
+                                            <p>Constructs a model.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    mixed
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___get">__get</a>(string $name)
+        
+                                            <p>Magic method which delegates to read_attribute(). This handles firing off getter methods,
+as they are not checked/invoked inside of read_attribute(). This circumvents the problem with
+a getter being accessed with the same name as an actual attribute.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    boolean
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___isset">__isset</a>(string $attribute_name)
+        
+                                            <p>Determines if an attribute exists for this {@link Model}.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    mixed
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___set">__set</a>(string $name, mixed $value)
+        
+                                            <p>Magic allows un-defined attributes to set via $attributes.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___wakeup">__wakeup</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    mixed
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_assign_attribute">assign_attribute</a>(string $name, mixed $value)
+        
+                                            <p>Assign a value to an attribute.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    mixed
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_read_attribute">read_attribute</a>(string $name)
+        
+                                            <p>Retrieves an attribute's value or a relationship object based on the name passed. If the attribute
+accessed is 'id' then it will return the model's primary key no matter what the actual attribute name is
+for the primary key.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_flag_dirty">flag_dirty</a>(string $name)
+        
+                                            <p>Flags an attribute as dirty.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    mixed
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_dirty_attributes">dirty_attributes</a>()
+        
+                                            <p>Returns hash of attributes that have been modified since loading the model.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    boolean
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_attribute_is_dirty">attribute_is_dirty</a>(string $attribute)
+        
+                                            <p>Check if a particular attribute has been modified since loading the model.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_attributes">attributes</a>()
+        
+                                            <p>Returns a copy of the model's attributes hash.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_get_primary_key">get_primary_key</a>(boolean $first = false)
+        
+                                            <p>Retrieve the primary key name.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_get_real_attribute_name">get_real_attribute_name</a>(string $name)
+        
+                                            <p>Returns the actual attribute name if $name is aliased.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_get_validation_rules">get_validation_rules</a>()
+        
+                                            <p>Returns array of validator data for this Model.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_get_values_for">get_values_for</a>(array $attributes)
+        
+                                            <p>Returns an associative array containing values for all the attributes in $attributes</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_table_name">table_name</a>()
+        
+                                            <p>Retrieves the name of the table for this Model.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    boolean
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_is_readonly">is_readonly</a>()
+        
+                                            <p>Determine if the model is in read-only mode.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    boolean
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_is_new_record">is_new_record</a>()
+        
+                                            <p>Determine if the model is a new record.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_readonly">readonly</a>(boolean $readonly = true)
+        
+                                            <p>Flag model as readonly.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;<a href="../ActiveRecord/Connection.html"><abbr title="ActiveRecord\Connection">Connection</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_connection">connection</a>()
+        
+                                            <p>Retrieve the connection for this model.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;<a href="../ActiveRecord/Connection.html"><abbr title="ActiveRecord\Connection">Connection</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_reestablish_connection">reestablish_connection</a>()
+        
+                                            <p>Re-establishes the database connection with a new connection.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;<a href="../ActiveRecord/Table.html"><abbr title="ActiveRecord\Table">Table</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_table">table</a>()
+        
+                                            <p>Returns the {@link Table} object for this model.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;<a href="../ActiveRecord/Model.html"><abbr title="ActiveRecord\Model">Model</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_create">create</a>(array $attributes, boolean $validate = true, boolean $guard_attributes = true)
+        
+                                            <p>Creates a model and saves it to the database.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    boolean
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_save">save</a>(boolean $validate = true)
+        
+                                            <p>Save the model to the database.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_expire_cache">expire_cache</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_cache_key">cache_key</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_delete_all">delete_all</a>($options = array())
+        
+                                            <p>Deletes records matching conditions in $options</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_update_all">update_all</a>($options = array())
+        
+                                            <p>Updates records using set in $options</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    boolean
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_delete">delete</a>()
+        
+                                            <p>Deletes this model from the database and returns true if successful.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_values_for_pk">values_for_pk</a>()
+        
+                                            <p>Helper that creates an array of values for the primary key(s).</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_values_for">values_for</a>(array $attribute_names)
+        
+                                            <p>Helper to return a hash of values for the specified attributes.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    boolean
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_is_dirty">is_dirty</a>()
+        
+                                            <p>Returns true if the model has been modified.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    boolean
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_is_valid">is_valid</a>()
+        
+                                            <p>Run validations on model and returns whether or not model passed validation.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    boolean
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_is_invalid">is_invalid</a>()
+        
+                                            <p>Runs validations and returns true if invalid.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_set_timestamps">set_timestamps</a>()
+        
+                                            <p>Updates a model's timestamps.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    boolean
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_update_attributes">update_attributes</a>(array $attributes)
+        
+                                            <p>Mass update the model with an array of attribute data and saves to the database.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    boolean
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_update_attribute">update_attribute</a>(string $name, mixed $value)
+        
+                                            <p>Updates a single attribute and saves the record without going through the normal validation procedure.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_set_attributes">set_attributes</a>(array $attributes)
+        
+                                            <p>Mass update the model with data from an attributes hash.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    void
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_set_relationship_from_eager_load">set_relationship_from_eager_load</a>(<a href="../ActiveRecord/Model.html"><abbr title="ActiveRecord\Model">Model</abbr></a> $model = null, $name)
+        
+                                            <p>Add a model to the given named ($name) relationship.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../ActiveRecord/Model.html"><abbr title="ActiveRecord\Model">Model</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_reload">reload</a>()
+        
+                                            <p>Reloads the attributes and relationships of this object from the database.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___clone">__clone</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_reset_dirty">reset_dirty</a>()
+        
+                                            <p>Resets the dirty array.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;<a href="../ActiveRecord/Model.html"><abbr title="ActiveRecord\Model">Model</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___callStatic">__callStatic</a>(string $method, mixed $args)
+        
+                                            <p>Enables the use of dynamic finders.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    mixed
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___call">__call</a>(string $method, mixed $args)
+        
+                                            <p>Enables the use of build|create for associations.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_all">all</a>()
+        
+                                            <p>Alias for self::find('all').</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_count">count</a>()
+        
+                                            <p>Get a count of qualifying records.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;boolean
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_exists">exists</a>()
+        
+                                            <p>Determine if a record exists.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;<a href="../ActiveRecord/Model.html"><abbr title="ActiveRecord\Model">Model</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_first">first</a>()
+        
+                                            <p>Alias for self::find('first').</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;<a href="../ActiveRecord/Model.html"><abbr title="ActiveRecord\Model">Model</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_last">last</a>()
+        
+                                            <p>Alias for self::find('last')</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;mixed
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_find">find</a>()
+        
+                                            <p>Find records in the database.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_get_models_from_cache">get_models_from_cache</a>($pks, $options)
+        
+                                            <p>Will look up a list of primary keys from cache</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;<a href="../ActiveRecord/Model.html"><abbr title="ActiveRecord\Model">Model</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_find_by_pk">find_by_pk</a>(array $values, array $options)
+        
+                                            <p>Finder method which will find by a single or array of primary keys for this model.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_find_by_sql">find_by_sql</a>(string $sql, array $values = null)
+        
+                                            <p>Find using a raw SELECT query.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;object
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_query">query</a>(string $sql, array $values = null)
+        
+                                            <p>Helper method to run arbitrary queries against the model's database connection.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;boolean
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_is_options_hash">is_options_hash</a>(array $array, bool $throw = true)
+        
+                                            <p>Determines if the specified array is a valid ActiveRecord options array.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_pk_conditions">pk_conditions</a>(mixed $args)
+        
+                                            <p>Returns a hash containing the names => values of the primary key.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_extract_and_validate_options">extract_and_validate_options</a>(array $array)
+        
+                                            <p>Pulls out the options hash from $array if any.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_to_json">to_json</a>(array $options = array())
+        
+                                            <p>Returns a JSON representation of this model.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_to_xml">to_xml</a>(array $options = array())
+        
+                                            <p>Returns an XML representation of this model.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_to_csv">to_csv</a>(array $options = array())
+        
+                                            <p>Returns an CSV representation of this model.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_to_array">to_array</a>(array $options = array())
+        
+                                            <p>Returns an Array representation of this model.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;boolean
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_transaction">transaction</a>(callable $closure)
+        
+                                            <p>Executes a block of code inside a database transaction.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L264">line 264</a></div>
+        <code>                    <a href="../ActiveRecord/Model.html"><abbr title="ActiveRecord\Model">Model</abbr></a>
+    <strong>__construct</strong>(array $attributes = array(), boolean $guard_attributes = true, boolean $instantiating_via_find = false, boolean $new_record = true)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Constructs a model.</p>                    <p>When a user instantiates a new object (e.g.: it was not ActiveRecord that instantiated via a find)
+then @var $attributes will be mapped according to the schema's defaults. Otherwise, the given
+$attributes will be mapped via set_attributes_via_mass_assignment.</p>
+
+<p><code>
+new Person(array('first_name' => 'Tito', 'last_name' => 'the Grief'));
+</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$attributes</td>
+                <td>Hash containing names and values to mass assign to the model</td>
+            </tr>
+                    <tr>
+                <td>boolean</td>
+                <td>$guard_attributes</td>
+                <td>Set to true to guard protected/non-accessible attributes</td>
+            </tr>
+                    <tr>
+                <td>boolean</td>
+                <td>$instantiating_via_find</td>
+                <td>Set to true if this model is being created from a find call</td>
+            </tr>
+                    <tr>
+                <td>boolean</td>
+                <td>$new_record</td>
+                <td>Set to true if this should be considered a new record</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../ActiveRecord/Model.html"><abbr title="ActiveRecord\Model">Model</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method___get">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L337">line 337</a></div>
+        <code>                    mixed
+    <strong>__get</strong>(string $name)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Magic method which delegates to read_attribute(). This handles firing off getter methods,
+as they are not checked/invoked inside of read_attribute(). This circumvents the problem with
+a getter being accessed with the same name as an actual attribute.</p>                    <p>You can also define customer getter methods for the model.</p>
+
+<p>EXAMPLE:
+<code>
+class User extends ActiveRecord\Model {</p>
+
+<p># define custom getter methods. Note you must
+  # prepend get_ to your method name:
+  function get_middle_initial() {
+    return $this->middle_name{0};
+  }
+}</p>
+
+<p>$user = new User();
+echo $user->middle_name;  # will call $user->get_middle_name()
+</code></p>
+
+<p>If you define a custom getter with the same name as an attribute then you
+will need to use read_attribute() to get the attribute's value.
+This is necessary due to the way __get() works.</p>
+
+<p>For example, assume 'name' is a field on the table and we're defining a
+custom getter for 'name':</p>
+
+<p><code>
+class User extends ActiveRecord\Model {</p>
+
+<p># INCORRECT way to do it
+  # function get_name() {
+  #   return strtoupper($this->name);
+  # }</p>
+
+<p>function get_name() {
+    return strtoupper($this->read_attribute('name'));
+  }
+}</p>
+
+<p>$user = new User();
+$user->name = 'bob';
+echo $user->name; # => BOB
+</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$name</td>
+                <td>Name of an attribute</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>mixed</td>
+            <td>The value of the attribute</td>
+        </tr>
+    </table>
+
+            
+            
+                            <h4>See also</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>read_attribute()</td>
+                <td></td>
+            </tr>
+            </table>
+
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method___isset">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L356">line 356</a></div>
+        <code>                    boolean
+    <strong>__isset</strong>(string $attribute_name)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Determines if an attribute exists for this {@link Model}.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$attribute_name</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>boolean</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method___set">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L411">line 411</a></div>
+        <code>                    mixed
+    <strong>__set</strong>(string $name, mixed $value)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Magic allows un-defined attributes to set via $attributes.</p>                    <p>You can also define customer setter methods for the model.</p>
+
+<p>EXAMPLE:
+<code>
+class User extends ActiveRecord\Model {</p>
+
+<p># define custom setter methods. Note you must
+  # prepend set_ to your method name:
+  function set_password($plaintext) {
+    $this->encrypted_password = md5($plaintext);
+  }
+}</p>
+
+<p>$user = new User();
+$user->password = 'plaintext';  # will call $user->set_password('plaintext')
+</code></p>
+
+<p>If you define a custom setter with the same name as an attribute then you
+will need to use assign_attribute() to assign the value to the attribute.
+This is necessary due to the way __set() works.</p>
+
+<p>For example, assume 'name' is a field on the table and we're defining a
+custom setter for 'name':</p>
+
+<p><code>
+class User extends ActiveRecord\Model {</p>
+
+<p># INCORRECT way to do it
+  # function set_name($name) {
+  #   $this->name = strtoupper($name);
+  # }</p>
+
+<p>function set_name($name) {
+    $this->assign_attribute('name',strtoupper($name));
+  }
+}</p>
+
+<p>$user = new User();
+$user->name = 'bob';
+echo $user->name; # => BOB
+</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$name</td>
+                <td>Name of attribute, relationship or other to set</td>
+            </tr>
+                    <tr>
+                <td>mixed</td>
+                <td>$value</td>
+                <td>The value</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>mixed</td>
+            <td>The value</td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><abbr title="ActiveRecord\{@link">{@link</abbr></td>
+                <td>UndefinedPropertyException} if $name does not exist</td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method___wakeup">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L437">line 437</a></div>
+        <code>                    
+    <strong>__wakeup</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_assign_attribute">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L450">line 450</a></div>
+        <code>                    mixed
+    <strong>assign_attribute</strong>(string $name, mixed $value)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Assign a value to an attribute.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$name</td>
+                <td>Name of the attribute</td>
+            </tr>
+                    <tr>
+                <td>mixed</td>
+                <td>$value</td>
+                <td>&amp;$value Value of the attribute</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>mixed</td>
+            <td>the attribute value</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_read_attribute">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L494">line 494</a></div>
+        <code>                    mixed
+    <strong>read_attribute</strong>(string $name)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Retrieves an attribute's value or a relationship object based on the name passed. If the attribute
+accessed is 'id' then it will return the model's primary key no matter what the actual attribute name is
+for the primary key.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$name</td>
+                <td>Name of an attribute</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>mixed</td>
+            <td>The value of the attribute</td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><abbr title="ActiveRecord\{@link">{@link</abbr></td>
+                <td>UndefinedPropertyException} if name could not be resolved to an attribute, relationship, ...</td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_flag_dirty">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L550">line 550</a></div>
+        <code>                    
+    <strong>flag_dirty</strong>(string $name)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Flags an attribute as dirty.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$name</td>
+                <td>Attribute name</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_dirty_attributes">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L563">line 563</a></div>
+        <code>                    mixed
+    <strong>dirty_attributes</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns hash of attributes that have been modified since loading the model.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>mixed</td>
+            <td>null if no dirty attributes otherwise returns array of dirty attributes.</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_attribute_is_dirty">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L577">line 577</a></div>
+        <code>                    boolean
+    <strong>attribute_is_dirty</strong>(string $attribute)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Check if a particular attribute has been modified since loading the model.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$attribute</td>
+                <td>Name of the attribute</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>boolean</td>
+            <td>TRUE if it has been modified.</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_attributes">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L587">line 587</a></div>
+        <code>                    array
+    <strong>attributes</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns a copy of the model's attributes hash.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td>A copy of the model's attribute data</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_get_primary_key">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L598">line 598</a></div>
+        <code>                    string
+    <strong>get_primary_key</strong>(boolean $first = false)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Retrieve the primary key name.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>boolean</td>
+                <td>$first</td>
+                <td>Set to true to return the first value in the pk array only</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td>The primary key for the model</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_get_real_attribute_name">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L610">line 610</a></div>
+        <code>                    string
+    <strong>get_real_attribute_name</strong>(string $name)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns the actual attribute name if $name is aliased.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$name</td>
+                <td>An attribute name</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_get_validation_rules">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L639">line 639</a></div>
+        <code>                    array
+    <strong>get_validation_rules</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns array of validator data for this Model.</p>                    <p>Will return an array looking like:</p>
+
+<p><code>
+array(
+  'name' => array(
+    array('validator' => 'validates_presence_of'),
+    array('validator' => 'validates_inclusion_of', 'in' => array('Bob','Joe','John')),
+  'password' => array(
+    array('validator' => 'validates_length_of', 'minimum' => 6))
+  )
+);
+</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td>An array containing validator data for this model.</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_get_values_for">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L653">line 653</a></div>
+        <code>                    array
+    <strong>get_values_for</strong>(array $attributes)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns an associative array containing values for all the attributes in $attributes</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$attributes</td>
+                <td>Array containing attribute names</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td>A hash containing $name => $value</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_table_name">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L670">line 670</a></div>
+        <code>        static            string
+    <strong>table_name</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Retrieves the name of the table for this Model.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_is_readonly">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L699">line 699</a></div>
+        <code>                    boolean
+    <strong>is_readonly</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Determine if the model is in read-only mode.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>boolean</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_is_new_record">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L709">line 709</a></div>
+        <code>                    boolean
+    <strong>is_new_record</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Determine if the model is a new record.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>boolean</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_readonly">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L731">line 731</a></div>
+        <code>                    
+    <strong>readonly</strong>(boolean $readonly = true)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Flag model as readonly.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>boolean</td>
+                <td>$readonly</td>
+                <td>Set to true to put the model into readonly mode</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_connection">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L741">line 741</a></div>
+        <code>        static            <a href="../ActiveRecord/Connection.html"><abbr title="ActiveRecord\Connection">Connection</abbr></a>
+    <strong>connection</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Retrieve the connection for this model.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../ActiveRecord/Connection.html"><abbr title="ActiveRecord\Connection">Connection</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_reestablish_connection">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L751">line 751</a></div>
+        <code>        static            <a href="../ActiveRecord/Connection.html"><abbr title="ActiveRecord\Connection">Connection</abbr></a>
+    <strong>reestablish_connection</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Re-establishes the database connection with a new connection.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../ActiveRecord/Connection.html"><abbr title="ActiveRecord\Connection">Connection</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_table">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L763">line 763</a></div>
+        <code>        static            <a href="../ActiveRecord/Table.html"><abbr title="ActiveRecord\Table">Table</abbr></a>
+    <strong>table</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns the {@link Table} object for this model.</p>                    <p>Be sure to call in static scoping: static::table()</p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../ActiveRecord/Table.html"><abbr title="ActiveRecord\Table">Table</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_create">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L776">line 776</a></div>
+        <code>        static            <a href="../ActiveRecord/Model.html"><abbr title="ActiveRecord\Model">Model</abbr></a>
+    <strong>create</strong>(array $attributes, boolean $validate = true, boolean $guard_attributes = true)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Creates a model and saves it to the database.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$attributes</td>
+                <td>Array of the models attributes</td>
+            </tr>
+                    <tr>
+                <td>boolean</td>
+                <td>$validate</td>
+                <td>True if the validators should be run</td>
+            </tr>
+                    <tr>
+                <td>boolean</td>
+                <td>$guard_attributes</td>
+                <td>Set to true to guard protected/non-accessible attributes</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../ActiveRecord/Model.html"><abbr title="ActiveRecord\Model">Model</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_save">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L796">line 796</a></div>
+        <code>                    boolean
+    <strong>save</strong>(boolean $validate = true)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Save the model to the database.</p>                    <p>This function will automatically determine if an INSERT or UPDATE needs to occur.
+If a validation or a callback for this model returns false, then the model will
+not be saved and this will return false.</p>
+
+<p>If saving an existing model only data that has changed will be saved.</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>boolean</td>
+                <td>$validate</td>
+                <td>Set to true or false depending on if you want the validators to run or not</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>boolean</td>
+            <td>True if the model was saved to the database otherwise false</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_expire_cache">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L895">line 895</a></div>
+        <code>            protected        
+    <strong>expire_cache</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_cache_key">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L904">line 904</a></div>
+        <code>            protected        
+    <strong>cache_key</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_delete_all">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L944">line 944</a></div>
+        <code>        static            
+    <strong>delete_all</strong>($options = array())
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Deletes records matching conditions in $options</p>                    <p>Does not instantiate models and therefore does not invoke callbacks</p>
+
+<p>Delete all using a hash:</p>
+
+<p><code>
+YourModel::delete_all(array('conditions' => array('name' => 'Tito')));
+</code></p>
+
+<p>Delete all using an array:</p>
+
+<p><code>
+YourModel::delete_all(array('conditions' => array('name = ?', 'Tito')));
+</code></p>
+
+<p>Delete all using a string:</p>
+
+<p><code>
+YourModel::delete_all(array('conditions' => 'name = "Tito"'));
+</code></p>
+
+<p>An options array takes the following parameters:</p>
+
+<ul>
+<li><b>conditions:</b> Conditions using a string/hash/array</li>
+<li><b>limit:</b> Limit number of records to delete (MySQL & Sqlite only)</li>
+<li><b>order:</b> A SQL fragment for ordering such as: 'name asc', 'id desc, name asc' (MySQL & Sqlite only)</li>
+</ul>
+</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$options</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_update_all">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L997">line 997</a></div>
+        <code>        static            
+    <strong>update_all</strong>($options = array())
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Updates records using set in $options</p>                    <p>Does not instantiate models and therefore does not invoke callbacks</p>
+
+<p>Update all using a hash:</p>
+
+<p><code>
+YourModel::update_all(array('set' => array('name' => "Bob")));
+</code></p>
+
+<p>Update all using a string:</p>
+
+<p><code>
+YourModel::update_all(array('set' => 'name = "Bob"'));
+</code></p>
+
+<p>An options array takes the following parameters:</p>
+
+<ul>
+<li><b>set:</b> String/hash of field names and their values to be updated with
+<li><b>conditions:</b> Conditions using a string/hash/array</li>
+<li><b>limit:</b> Limit number of records to update (MySQL & Sqlite only)</li>
+<li><b>order:</b> A SQL fragment for ordering such as: 'name asc', 'id desc, name asc' (MySQL & Sqlite only)</li>
+</ul>
+</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$options</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_delete">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L1030">line 1030</a></div>
+        <code>                    boolean
+    <strong>delete</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Deletes this model from the database and returns true if successful.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>boolean</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_values_for_pk">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L1054">line 1054</a></div>
+        <code>                    array
+    <strong>values_for_pk</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Helper that creates an array of values for the primary key(s).</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td>An array in the form array(key_name => value, ...)</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_values_for">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L1065">line 1065</a></div>
+        <code>                    array
+    <strong>values_for</strong>(array $attribute_names)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Helper to return a hash of values for the specified attributes.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$attribute_names</td>
+                <td>Array of attribute names</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td>An array in the form array(name => value, ...)</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_is_dirty">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L1111">line 1111</a></div>
+        <code>                    boolean
+    <strong>is_dirty</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns true if the model has been modified.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>boolean</td>
+            <td>true if modified</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_is_valid">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L1122">line 1122</a></div>
+        <code>                    boolean
+    <strong>is_valid</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Run validations on model and returns whether or not model passed validation.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>boolean</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                            <h4>See also</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>is_invalid</td>
+                <td></td>
+            </tr>
+            </table>
+
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_is_invalid">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L1133">line 1133</a></div>
+        <code>                    boolean
+    <strong>is_invalid</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Runs validations and returns true if invalid.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>boolean</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                            <h4>See also</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>is_valid</td>
+                <td></td>
+            </tr>
+            </table>
+
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_set_timestamps">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L1141">line 1141</a></div>
+        <code>                    
+    <strong>set_timestamps</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Updates a model's timestamps.</p>                                                </div>
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_update_attributes">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L1158">line 1158</a></div>
+        <code>                    boolean
+    <strong>update_attributes</strong>(array $attributes)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Mass update the model with an array of attribute data and saves to the database.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$attributes</td>
+                <td>An attribute data array in the form array(name => value, ...)</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>boolean</td>
+            <td>True if successfully updated and saved otherwise false</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_update_attribute">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L1171">line 1171</a></div>
+        <code>                    boolean
+    <strong>update_attribute</strong>(string $name, mixed $value)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Updates a single attribute and saves the record without going through the normal validation procedure.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$name</td>
+                <td>Name of attribute</td>
+            </tr>
+                    <tr>
+                <td>mixed</td>
+                <td>$value</td>
+                <td>Value of the attribute</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>boolean</td>
+            <td>True if successful otherwise false</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_set_attributes">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L1186">line 1186</a></div>
+        <code>                    
+    <strong>set_attributes</strong>(array $attributes)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Mass update the model with data from an attributes hash.</p>                    <p>Unlike update_attributes() this method only updates the model's data
+but DOES NOT save it to the database.</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$attributes</td>
+                <td>An array containing data to update in the form array(name => value, ...)</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                            <h4>See also</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>update_attributes</td>
+                <td></td>
+            </tr>
+            </table>
+
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_set_relationship_from_eager_load">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L1254">line 1254</a></div>
+        <code>                    void
+    <strong>set_relationship_from_eager_load</strong>(<a href="../ActiveRecord/Model.html"><abbr title="ActiveRecord\Model">Model</abbr></a> $model = null, $name)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Add a model to the given named ($name) relationship.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../ActiveRecord/Model.html"><abbr title="ActiveRecord\Model">Model</abbr></a></td>
+                <td>$model</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$name</td>
+                <td>of relationship for this table</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>void</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_reload">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L1280">line 1280</a></div>
+        <code>                    <a href="../ActiveRecord/Model.html"><abbr title="ActiveRecord\Model">Model</abbr></a>
+    <strong>reload</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Reloads the attributes and relationships of this object from the database.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../ActiveRecord/Model.html"><abbr title="ActiveRecord\Model">Model</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method___clone">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L1292">line 1292</a></div>
+        <code>                    
+    <strong>__clone</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_reset_dirty">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L1304">line 1304</a></div>
+        <code>                    
+    <strong>reset_dirty</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Resets the dirty array.</p>                                                </div>
+                <div class="tags">
+            
+            
+            
+                            <h4>See also</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>dirty_attributes</td>
+                <td></td>
+            </tr>
+            </table>
+
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method___callStatic">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L1355">line 1355</a></div>
+        <code>        static            <a href="../ActiveRecord/Model.html"><abbr title="ActiveRecord\Model">Model</abbr></a>
+    <strong>__callStatic</strong>(string $method, mixed $args)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Enables the use of dynamic finders.</p>                    <p>Dynamic finders are just an easy way to do queries quickly without having to
+specify an options array with conditions in it.</p>
+
+<p><code>
+SomeModel::find_by_first_name('Tito');
+SomeModel::find_by_first_name_and_last_name('Tito','the Grief');
+SomeModel::find_by_first_name_or_last_name('Tito','the Grief');
+SomeModel::find_all_by_last_name('Smith');
+SomeModel::count_by_name('Bob')
+SomeModel::count_by_name_or_state('Bob','VA')
+SomeModel::count_by_name_and_state('Bob','VA')
+</code></p>
+
+<p>You can also create the model if the find call returned no results:</p>
+
+<p><code>
+Person::find_or_create_by_name('Tito');</p>
+
+<h1>would be the equivalent of</h1>
+
+<p>if (!Person::find_by_name('Tito'))
+  Person::create(array('Tito'));
+</code></p>
+
+<p>Some other examples of find_or_create_by:</p>
+
+<p><code>
+Person::find_or_create_by_name_and_id('Tito',1);
+Person::find_or_create_by_name_and_id(array('name' => 'Tito', 'id' => 1));
+</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$method</td>
+                <td>Name of method</td>
+            </tr>
+                    <tr>
+                <td>mixed</td>
+                <td>$args</td>
+                <td>Method args</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../ActiveRecord/Model.html"><abbr title="ActiveRecord\Model">Model</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><abbr title="ActiveRecord\{@link">{@link</abbr></td>
+                <td>ActiveRecordException} if invalid query</td>
+            </tr>
+            </table>
+
+            
+                            <h4>See also</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>find</td>
+                <td></td>
+            </tr>
+            </table>
+
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method___call">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L1403">line 1403</a></div>
+        <code>                    mixed
+    <strong>__call</strong>(string $method, mixed $args)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Enables the use of build|create for associations.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$method</td>
+                <td>Name of method</td>
+            </tr>
+                    <tr>
+                <td>mixed</td>
+                <td>$args</td>
+                <td>Method args</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>mixed</td>
+            <td>An instance of a given {@link AbstractRelationship}</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_all">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L1434">line 1434</a></div>
+        <code>        static            array
+    <strong>all</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Alias for self::find('all').</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td>array of records found</td>
+        </tr>
+    </table>
+
+            
+            
+                            <h4>See also</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>find</td>
+                <td></td>
+            </tr>
+            </table>
+
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_count">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L1449">line 1449</a></div>
+        <code>        static            int
+    <strong>count</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Get a count of qualifying records.</p>                    <p><code>
+YourModel::count(array('conditions' => 'amount > 3.14159265'));
+</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td>Number of records that matched the query</td>
+        </tr>
+    </table>
+
+            
+            
+                            <h4>See also</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>find</td>
+                <td></td>
+            </tr>
+            </table>
+
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_exists">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L1481">line 1481</a></div>
+        <code>        static            boolean
+    <strong>exists</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Determine if a record exists.</p>                    <p><code>
+SomeModel::exists(123);
+SomeModel::exists(array('conditions' => array('id=? and name=?', 123, 'Tito')));
+SomeModel::exists(array('id' => 123, 'name' => 'Tito'));
+</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>boolean</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                            <h4>See also</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>find</td>
+                <td></td>
+            </tr>
+            </table>
+
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_first">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L1492">line 1492</a></div>
+        <code>        static            <a href="../ActiveRecord/Model.html"><abbr title="ActiveRecord\Model">Model</abbr></a>
+    <strong>first</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Alias for self::find('first').</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../ActiveRecord/Model.html"><abbr title="ActiveRecord\Model">Model</abbr></a></td>
+            <td>The first matched record or null if not found</td>
+        </tr>
+    </table>
+
+            
+            
+                            <h4>See also</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>find</td>
+                <td></td>
+            </tr>
+            </table>
+
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_last">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L1503">line 1503</a></div>
+        <code>        static            <a href="../ActiveRecord/Model.html"><abbr title="ActiveRecord\Model">Model</abbr></a>
+    <strong>last</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Alias for self::find('last')</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../ActiveRecord/Model.html"><abbr title="ActiveRecord\Model">Model</abbr></a></td>
+            <td>The last matched record or null if not found</td>
+        </tr>
+    </table>
+
+            
+            
+                            <h4>See also</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>find</td>
+                <td></td>
+            </tr>
+            </table>
+
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_find">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L1562">line 1562</a></div>
+        <code>        static            mixed
+    <strong>find</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Find records in the database.</p>                    <p>Finding by the primary key:</p>
+
+<p><code></p>
+
+<h1>queries for the model with id=123</h1>
+
+<p>YourModel::find(123);</p>
+
+<h1>queries for model with id in(1,2,3)</h1>
+
+<p>YourModel::find(1,2,3);</p>
+
+<h1>finding by pk accepts an options array</h1>
+
+<p>YourModel::find(123,array('order' => 'name desc'));
+</code></p>
+
+<p>Finding by using a conditions array:</p>
+
+<p><code>
+YourModel::find('first', array('conditions' => array('name=?','Tito'),
+  'order' => 'name asc'))
+YourModel::find('all', array('conditions' => 'amount > 3.14159265'));
+YourModel::find('all', array('conditions' => array('id in(?)', array(1,2,3))));
+</code></p>
+
+<p>Finding by using a hash:</p>
+
+<p><code>
+YourModel::find(array('name' => 'Tito', 'id' => 1));
+YourModel::find('first',array('name' => 'Tito', 'id' => 1));
+YourModel::find('all',array('name' => 'Tito', 'id' => 1));
+</code></p>
+
+<p>An options array can take the following parameters:</p>
+
+<ul>
+<li><b>select:</b> A SQL fragment for what fields to return such as: '*', 'people.*', 'first_name, last_name, id'</li>
+<li><b>joins:</b> A SQL join fragment such as: 'JOIN roles ON(roles.user_id=user.id)' or a named association on the model</li>
+<li><b>include:</b> TODO not implemented yet</li>
+<li><b>conditions:</b> A SQL fragment such as: 'id=1', array('id=1'), array('name=? and id=?','Tito',1), array('name IN(?)', array('Tito','Bob')),
+array('name' => 'Tito', 'id' => 1)</li>
+<li><b>limit:</b> Number of records to limit the query to</li>
+<li><b>offset:</b> The row offset to return results from for the query</li>
+<li><b>order:</b> A SQL fragment for order such as: 'name asc', 'name asc, id desc'</li>
+<li><b>readonly:</b> Return all the models in readonly mode</li>
+<li><b>group:</b> A SQL group by fragment</li>
+</ul>
+</p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>mixed</td>
+            <td>An array of records found if doing a find_all otherwise a
+  single Model object or null if it wasn't found. NULL is only return when
+  doing a first/last find. If doing an all find and no records matched this
+  will return an empty array.</td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><abbr title="ActiveRecord\{@link">{@link</abbr></td>
+                <td>RecordNotFound} if no options are passed or finding by pk and no records matched</td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_get_models_from_cache">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L1619">line 1619</a></div>
+        <code>        static    protected        array
+    <strong>get_models_from_cache</strong>($pks, $options)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Will look up a list of primary keys from cache</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$pks</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$options</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_find_by_pk">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L1650">line 1650</a></div>
+        <code>        static            <a href="../ActiveRecord/Model.html"><abbr title="ActiveRecord\Model">Model</abbr></a>
+    <strong>find_by_pk</strong>(array $values, array $options)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Finder method which will find by a single or array of primary keys for this model.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$values</td>
+                <td>An array containing values for the pk</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>An options array</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../ActiveRecord/Model.html"><abbr title="ActiveRecord\Model">Model</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><abbr title="ActiveRecord\{@link">{@link</abbr></td>
+                <td>RecordNotFound} if a record could not be found</td>
+            </tr>
+            </table>
+
+            
+                            <h4>See also</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>find</td>
+                <td></td>
+            </tr>
+            </table>
+
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_find_by_sql">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L1698">line 1698</a></div>
+        <code>        static            array
+    <strong>find_by_sql</strong>(string $sql, array $values = null)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Find using a raw SELECT query.</p>                    <p><code>
+YourModel::find_by_sql("SELECT * FROM people WHERE name=?",array('Tito'));
+YourModel::find_by_sql("SELECT * FROM people WHERE name='Tito'");
+</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$sql</td>
+                <td>The raw SELECT query</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$values</td>
+                <td>An array of values for any parameters that needs to be bound</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td>An array of models</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_query">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L1710">line 1710</a></div>
+        <code>        static            object
+    <strong>query</strong>(string $sql, array $values = null)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Helper method to run arbitrary queries against the model's database connection.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$sql</td>
+                <td>SQL to execute</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$values</td>
+                <td>Bind values, if any, for the query</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>object</td>
+            <td>A PDOStatement object</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_is_options_hash">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L1723">line 1723</a></div>
+        <code>        static            boolean
+    <strong>is_options_hash</strong>(array $array, bool $throw = true)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Determines if the specified array is a valid ActiveRecord options array.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$array</td>
+                <td>An options array</td>
+            </tr>
+                    <tr>
+                <td>bool</td>
+                <td>$throw</td>
+                <td>True to throw an exception if not valid</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>boolean</td>
+            <td>True if valid otherwise valse</td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><abbr title="ActiveRecord\{@link">{@link</abbr></td>
+                <td>ActiveRecordException} if the array contained any invalid options</td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_pk_conditions">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L1748">line 1748</a></div>
+        <code>        static            array
+    <strong>pk_conditions</strong>(mixed $args)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns a hash containing the names => values of the primary key.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>mixed</td>
+                <td>$args</td>
+                <td>Primary key value(s)</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td>An array in the form array(name => value, ...)</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_extract_and_validate_options">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L1762">line 1762</a></div>
+        <code>        static            array
+    <strong>extract_and_validate_options</strong>(array $array)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Pulls out the options hash from $array if any.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$array</td>
+                <td>&amp;$array An array</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td>A valid options array</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_to_json">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L1796">line 1796</a></div>
+        <code>                    string
+    <strong>to_json</strong>(array $options = array())
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns a JSON representation of this model.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>An array containing options for json serialization (see {@link Serialization} for valid options)</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td>JSON representation of the model</td>
+        </tr>
+    </table>
+
+            
+            
+                            <h4>See also</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>Serialization</td>
+                <td></td>
+            </tr>
+            </table>
+
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_to_xml">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L1808">line 1808</a></div>
+        <code>                    string
+    <strong>to_xml</strong>(array $options = array())
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns an XML representation of this model.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>An array containing options for xml serialization (see {@link Serialization} for valid options)</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td>XML representation of the model</td>
+        </tr>
+    </table>
+
+            
+            
+                            <h4>See also</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>Serialization</td>
+                <td></td>
+            </tr>
+            </table>
+
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_to_csv">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L1833">line 1833</a></div>
+        <code>                    string
+    <strong>to_csv</strong>(array $options = array())
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns an CSV representation of this model.</p>                    <p>Can take optional delimiter and enclosure
+(defaults are , and double quotes)</p>
+
+<p>Ex:
+<code>
+ActiveRecord\CsvSerializer::$delimiter=';';
+ActiveRecord\CsvSerializer::$enclosure='';
+YourModel::find('first')->to_csv(array('only'=>array('name','level')));
+returns: Joe,2</p>
+
+<p>YourModel::find('first')->to_csv(array('only_header'=>true,'only'=>array('name','level')));
+returns: name,level
+</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>An array containing options for csv serialization (see {@link Serialization} for valid options)</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td>CSV representation of the model</td>
+        </tr>
+    </table>
+
+            
+            
+                            <h4>See also</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>Serialization</td>
+                <td></td>
+            </tr>
+            </table>
+
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_to_array">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L1845">line 1845</a></div>
+        <code>                    array
+    <strong>to_array</strong>(array $options = array())
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns an Array representation of this model.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>An array containing options for json serialization (see {@link Serialization} for valid options)</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td>Array representation of the model</td>
+        </tr>
+    </table>
+
+            
+            
+                            <h4>See also</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>Serialization</td>
+                <td></td>
+            </tr>
+            </table>
+
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_transaction">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Model.php#L1918">line 1918</a></div>
+        <code>        static            boolean
+    <strong>transaction</strong>(callable $closure)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Executes a block of code inside a database transaction.</p>                    <p><code>
+YourModel::transaction(function()
+{
+  YourModel::create(array("name" => "blah"));
+});
+</code></p>
+
+<p>If an exception is thrown inside the closure the transaction will
+automatically be rolled back. You can also return false from your
+closure to cause a rollback:</p>
+
+<p><code>
+YourModel::transaction(function()
+{
+  YourModel::create(array("name" => "blah"));
+  throw new Exception("rollback!");
+});</p>
+
+<p>YourModel::transaction(function()
+{
+  YourModel::create(array("name" => "blah"));
+  return false; # rollback!
+});
+</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>callable</td>
+                <td>$closure</td>
+                <td>The closure to execute. To cause a rollback have your closure return false or throw an exception.</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>boolean</td>
+            <td>True if the transaction was committed, False if rolled back.</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

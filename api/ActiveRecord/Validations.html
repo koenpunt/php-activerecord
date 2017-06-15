@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>ActiveRecord\Validations | PHP ActiveRecord</title>
+
+            <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../css/sami.css">
+        <script src="../js/jquery-1.11.1.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script src="../js/typeahead.min.js"></script>
+        <script src="../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:ActiveRecord_Validations" data-root-path="../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../index.html">PHP ActiveRecord</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../classes.html">Classes</a></li>
+                                            <li><a href="../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../interfaces.html">Interfaces</a></li>
+                    <li><a href="../traits.html">Traits</a></li>
+                    <li><a href="../doc-index.html">Index</a></li>
+                    <li><a href="../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../ActiveRecord.html">ActiveRecord</a></li><li class="backslash">\</li><li>Validations</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            Validations
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>Validations</strong>        (<a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Validations.php">View source</a>)
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>Manages validations for a {@link Model}.</p>            <p>This class isn't meant to be directly used. Instead you define
+validators thru static variables in your {@link Model}. Example:</p>
+
+<p><code>
+class Person extends ActiveRecord\Model {
+  static $validates_length_of = array(
+    array('name', 'within' => array(30,100),
+    array('state', 'is' => 2)
+  );
+}</p>
+
+<p>$person = new Person();
+$person->name = 'Tito';
+$person->state = 'this is not two characters';</p>
+
+<p>if (!$person->is_valid())
+  print_r($person->errors);
+</code></p>                    </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../ActiveRecord/Validations.html"><abbr title="ActiveRecord\Validations">Validations</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>(<a href="../ActiveRecord/Model.html"><abbr title="ActiveRecord\Model">Model</abbr></a> $model)
+        
+                                            <p>Constructs a {@link Validations} object.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_get_record">get_record</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_rules">rules</a>()
+        
+                                            <p>Returns validator data.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../ActiveRecord/Errors.html"><abbr title="ActiveRecord\Errors">Errors</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_validate">validate</a>()
+        
+                                            <p>Runs the validators.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_validates_presence_of">validates_presence_of</a>(array $attrs)
+        
+                                            <p>Validates a field is not null and not blank.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_validates_inclusion_of">validates_inclusion_of</a>(array $attrs)
+        
+                                            <p>Validates that a value is included the specified array.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_validates_exclusion_of">validates_exclusion_of</a>(array $attrs)
+        
+                                            <p>This is the opposite of {@link validates_include_of}.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_validates_inclusion_or_exclusion_of">validates_inclusion_or_exclusion_of</a>(string $type, $attrs)
+        
+                                            <p>Validates that a value is in or out of a specified list of values.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_validates_numericality_of">validates_numericality_of</a>(array $attrs)
+        
+                                            <p>Validates that a value is numeric.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_validates_size_of">validates_size_of</a>(array $attrs)
+        
+                                            <p>Alias of {@link validates_length_of}</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_validates_format_of">validates_format_of</a>(array $attrs)
+        
+                                            <p>Validates that a value is matches a regex.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_validates_length_of">validates_length_of</a>(array $attrs)
+        
+                                            <p>Validates the length of a value.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_validates_uniqueness_of">validates_uniqueness_of</a>(array $attrs)
+        
+                                            <p>Validates the uniqueness of a value.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Validations.php#L91">line 91</a></div>
+        <code>                    <a href="../ActiveRecord/Validations.html"><abbr title="ActiveRecord\Validations">Validations</abbr></a>
+    <strong>__construct</strong>(<a href="../ActiveRecord/Model.html"><abbr title="ActiveRecord\Model">Model</abbr></a> $model)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Constructs a {@link Validations} object.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../ActiveRecord/Model.html"><abbr title="ActiveRecord\Model">Model</abbr></a></td>
+                <td>$model</td>
+                <td>The model to validate</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../ActiveRecord/Validations.html"><abbr title="ActiveRecord\Validations">Validations</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_get_record">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Validations.php#L99">line 99</a></div>
+        <code>                    
+    <strong>get_record</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_rules">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Validations.php#L109">line 109</a></div>
+        <code>                    array
+    <strong>rules</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns validator data.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_validate">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Validations.php#L136">line 136</a></div>
+        <code>                    <a href="../ActiveRecord/Errors.html"><abbr title="ActiveRecord\Errors">Errors</abbr></a>
+    <strong>validate</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Runs the validators.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../ActiveRecord/Errors.html"><abbr title="ActiveRecord\Errors">Errors</abbr></a></td>
+            <td>the validation errors if any</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_validates_presence_of">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Validations.php#L175">line 175</a></div>
+        <code>                    
+    <strong>validates_presence_of</strong>(array $attrs)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Validates a field is not null and not blank.</p>                    <p><code>
+class Person extends ActiveRecord\Model {
+  static $validates_presence_of = array(
+    array('first_name'),
+    array('last_name')
+  );
+}
+</code></p>
+
+<p>Available options:</p>
+
+<ul>
+<li><b>message:</b> custom error message</li>
+<li><b>allow_blank:</b> allow blank strings</li>
+<li><b>allow_null:</b> allow null strings</li>
+</ul>
+</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$attrs</td>
+                <td>Validation definition</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_validates_inclusion_of">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Validations.php#L208">line 208</a></div>
+        <code>                    
+    <strong>validates_inclusion_of</strong>(array $attrs)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Validates that a value is included the specified array.</p>                    <p><code>
+class Car extends ActiveRecord\Model {
+  static $validates_inclusion_of = array(
+    array('fuel_type', 'in' => array('hyrdogen', 'petroleum', 'electric')),
+  );
+}
+</code></p>
+
+<p>Available options:</p>
+
+<ul>
+<li><b>in/within:</b> attribute should/shouldn't be a value within an array</li>
+<li><b>message:</b> custome error message</li>
+<li><b>allow_blank:</b> allow blank strings</li>
+<li><b>allow_null:</b> allow null strings</li>
+</ul>
+</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$attrs</td>
+                <td>Validation definition</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_validates_exclusion_of">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Validations.php#L228">line 228</a></div>
+        <code>                    
+    <strong>validates_exclusion_of</strong>(array $attrs)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>This is the opposite of {@link validates_include_of}.</p>                    <p>Available options:</p>
+
+<ul>
+<li><b>in/within:</b> attribute should/shouldn't be a value within an array</li>
+<li><b>message:</b> custome error message</li>
+<li><b>allow_blank:</b> allow blank strings</li>
+<li><b>allow_null:</b> allow null strings</li>
+</ul>
+</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$attrs</td>
+                <td>Validation definition</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                            <h4>See also</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>validates_inclusion_of</td>
+                <td></td>
+            </tr>
+            </table>
+
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_validates_inclusion_or_exclusion_of">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Validations.php#L250">line 250</a></div>
+        <code>                    
+    <strong>validates_inclusion_or_exclusion_of</strong>(string $type, $attrs)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Validates that a value is in or out of a specified list of values.</p>                    <p>Available options:</p>
+
+<ul>
+<li><b>in/within:</b> attribute should/shouldn't be a value within an array</li>
+<li><b>message:</b> custome error message</li>
+<li><b>allow_blank:</b> allow blank strings</li>
+<li><b>allow_null:</b> allow null strings</li>
+</ul>
+</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$type</td>
+                <td>Either inclusion or exclusion</td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$attrs</td>
+                <td>Validation definition</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                            <h4>See also</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>validates_inclusion_of</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>validates_exclusion_of</td>
+                <td></td>
+            </tr>
+            </table>
+
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_validates_numericality_of">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Validations.php#L306">line 306</a></div>
+        <code>                    
+    <strong>validates_numericality_of</strong>(array $attrs)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Validates that a value is numeric.</p>                    <p><code>
+class Person extends ActiveRecord\Model {
+  static $validates_numericality_of = array(
+    array('salary', 'greater_than' => 19.99, 'less_than' => 99.99)
+  );
+}
+</code></p>
+
+<p>Available options:</p>
+
+<ul>
+<li><b>only_integer:</b> value must be an integer (e.g. not a float)</li>
+<li><b>even:</b> must be even</li>
+<li><b>odd:</b> must be odd"</li>
+<li><b>greater_than:</b> must be greater than specified number</li>
+<li><b>greater_than_or_equal_to:</b> must be greater than or equal to specified number</li>
+<li><b>equal_to:</b> ...</li>
+<li><b>less_than:</b> ...</li>
+<li><b>less_than_or_equal_to:</b> ...</li>
+<li><b>allow_blank:</b> allow blank strings</li>
+<li><b>allow_null:</b> allow null strings</li>
+</ul>
+</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$attrs</td>
+                <td>Validation definition</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_validates_size_of">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Validations.php#L388">line 388</a></div>
+        <code>                    
+    <strong>validates_size_of</strong>(array $attrs)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Alias of {@link validates_length_of}</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$attrs</td>
+                <td>Validation definition</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_validates_format_of">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Validations.php#L415">line 415</a></div>
+        <code>                    
+    <strong>validates_format_of</strong>(array $attrs)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Validates that a value is matches a regex.</p>                    <p><code>
+class Person extends ActiveRecord\Model {
+  static $validates_format_of = array(
+    array('email', 'with' => '/^.<em>?@.</em>$/')
+  );
+}
+</code></p>
+
+<p>Available options:</p>
+
+<ul>
+<li><b>with:</b> a regular expression</li>
+<li><b>message:</b> custom error message</li>
+<li><b>allow_blank:</b> allow blank strings</li>
+<li><b>allow_null:</b> allow null strings</li>
+</ul>
+</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$attrs</td>
+                <td>Validation definition</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_validates_length_of">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Validations.php#L462">line 462</a></div>
+        <code>                    
+    <strong>validates_length_of</strong>(array $attrs)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Validates the length of a value.</p>                    <p><code>
+class Person extends ActiveRecord\Model {
+  static $validates_length_of = array(
+    array('name', 'within' => array(1,50))
+  );
+}
+</code></p>
+
+<p>Available options:</p>
+
+<ul>
+<li><b>is:</b> attribute should be exactly n characters long</li>
+<li><b>in/within:</b> attribute should be within an range array(min,max)</li>
+<li><b>maximum/minimum:</b> attribute should not be above/below respectively</li>
+<li><b>message:</b> custome error message</li>
+<li><b>allow_blank:</b> allow blank strings</li>
+<li><b>allow_null:</b> allow null strings. (Even if this is set to false, a null string is always shorter than a maximum value.)</li>
+</ul>
+</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$attrs</td>
+                <td>Validation definition</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_validates_uniqueness_of">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Validations.php#L563">line 563</a></div>
+        <code>                    
+    <strong>validates_uniqueness_of</strong>(array $attrs)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Validates the uniqueness of a value.</p>                    <p><code>
+class Person extends ActiveRecord\Model {
+  static $validates_uniqueness_of = array(
+    array('name'),
+    array(array('blah','bleh'), 'message' => 'blech')
+  );
+}
+</code></p>
+
+<p>Available options:</p>
+
+<ul>
+<li><b>with:</b> a regular expression</li>
+<li><b>message:</b> custom error message</li>
+<li><b>allow_blank:</b> allow blank strings</li>
+<li><b>allow_null:</b> allow null strings</li>
+</ul>
+</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$attrs</td>
+                <td>Validation definition</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

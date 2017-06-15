@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>ActiveRecord\Cache | PHP ActiveRecord</title>
+
+            <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../css/sami.css">
+        <script src="../js/jquery-1.11.1.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script src="../js/typeahead.min.js"></script>
+        <script src="../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:ActiveRecord_Cache" data-root-path="../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../index.html">PHP ActiveRecord</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../classes.html">Classes</a></li>
+                                            <li><a href="../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../interfaces.html">Interfaces</a></li>
+                    <li><a href="../traits.html">Traits</a></li>
+                    <li><a href="../doc-index.html">Index</a></li>
+                    <li><a href="../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../ActiveRecord.html">ActiveRecord</a></li><li class="backslash">\</li><li>Cache</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            Cache
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>Cache</strong>        (<a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Cache.php">View source</a>)
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>Cache::get('the-cache-key', function() {
+ # this gets executed when cache is stale
+ return "your cacheable datas";
+});</p>                                </div>
+    
+    
+    
+            <h2>Properties</h2>
+
+            <table class="table table-condensed">
+                    <tr>
+                <td class="type" id="property_adapter">
+                    static                                                            
+                </td>
+                <td>$adapter</td>
+                <td class="last"></td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_options">
+                    static                                                            
+                </td>
+                <td>$options</td>
+                <td class="last"></td>
+                <td></td>
+            </tr>
+            </table>
+
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_initialize">initialize</a>(string $url, array $options = array())
+        
+                                            <p>Initializes the cache.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_flush">flush</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;mixed
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_get">get</a>($key, $closure, $expire = null)
+        
+                                            <p>Attempt to retrieve a value from cache using a key. If the value is not found, then the closure method
+will be invoked, and the result will be stored in cache using that key.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_set">set</a>($key, $var, $expire = null)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_delete">delete</a>($key)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method_initialize">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Cache.php#L40">line 40</a></div>
+        <code>        static            
+    <strong>initialize</strong>(string $url, array $options = array())
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Initializes the cache.</p>                    <p>With the $options array it's possible to define:
+- expiration of the key, (time in seconds)
+- a namespace for the key</p>
+
+<p>this last one is useful in the case two applications use
+a shared key/store (for instance a shared Memcached db)</p>
+
+<p>Ex:
+$cfg_ar = ActiveRecord\Config::instance();
+$cfg_ar->set_cache('memcache://localhost:11211',array('namespace' => 'my_cool_app',
+                                                                                                         'expire'        => 120
+                                                                                                         ));</p>
+
+<p>In the example above all the keys expire after 120 seconds, and the
+all get a postfix 'my_cool_app'.</p>
+
+<p>(Note: expiring needs to be implemented in your cache store.)</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$url</td>
+                <td>URL to your cache server</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>Specify additional options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_flush">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Cache.php#L56">line 56</a></div>
+        <code>        static            
+    <strong>flush</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_get">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Cache.php#L70">line 70</a></div>
+        <code>        static            mixed
+    <strong>get</strong>($key, $closure, $expire = null)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Attempt to retrieve a value from cache using a key. If the value is not found, then the closure method
+will be invoked, and the result will be stored in cache using that key.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$key</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$closure</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$expire</td>
+                <td>in seconds</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>mixed</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_set">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Cache.php#L88">line 88</a></div>
+        <code>        static            
+    <strong>set</strong>($key, $var, $expire = null)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$key</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$expire</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_delete">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Cache.php#L102">line 102</a></div>
+        <code>        static            
+    <strong>delete</strong>($key)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$key</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

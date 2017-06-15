@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>ActiveRecord\StandardInflector | PHP ActiveRecord</title>
+
+            <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../css/sami.css">
+        <script src="../js/jquery-1.11.1.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script src="../js/typeahead.min.js"></script>
+        <script src="../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:ActiveRecord_StandardInflector" data-root-path="../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../index.html">PHP ActiveRecord</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../classes.html">Classes</a></li>
+                                            <li><a href="../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../interfaces.html">Interfaces</a></li>
+                    <li><a href="../traits.html">Traits</a></li>
+                    <li><a href="../doc-index.html">Index</a></li>
+                    <li><a href="../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../ActiveRecord.html">ActiveRecord</a></li><li class="backslash">\</li><li>StandardInflector</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            StandardInflector
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>StandardInflector</strong>        extends <a href="../ActiveRecord/Inflector.html"><abbr title="ActiveRecord\Inflector">Inflector</abbr></a>        (<a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Inflector.php">View source</a>)
+</p>
+
+        
+    
+
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;object
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_instance">instance</a>()
+        
+                                            <p>Get an instance of the {@link Inflector} class.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../ActiveRecord/Inflector.html#method_instance"><abbr title="ActiveRecord\Inflector">Inflector</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_camelize">camelize</a>(string $s)
+        
+                                            <p>Turn a string into its camelized version.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../ActiveRecord/Inflector.html#method_camelize"><abbr title="ActiveRecord\Inflector">Inflector</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_is_upper">is_upper</a>(string $s)
+        
+                                            <p>Determines if a string contains all uppercase characters.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../ActiveRecord/Inflector.html#method_is_upper"><abbr title="ActiveRecord\Inflector">Inflector</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_is_lower">is_lower</a>(string $s)
+        
+                                            <p>Determines if a string contains all lowercase characters.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../ActiveRecord/Inflector.html#method_is_lower"><abbr title="ActiveRecord\Inflector">Inflector</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_uncamelize">uncamelize</a>(string $s)
+        
+                                            <p>Convert a camelized string to a lowercase, underscored string.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../ActiveRecord/Inflector.html#method_uncamelize"><abbr title="ActiveRecord\Inflector">Inflector</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_underscorify">underscorify</a>(string $s)
+        
+                                            <p>Convert a string with space into a underscored equivalent.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../ActiveRecord/Inflector.html#method_underscorify"><abbr title="ActiveRecord\Inflector">Inflector</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_keyify">keyify</a>($class_name)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../ActiveRecord/Inflector.html#method_keyify"><abbr title="ActiveRecord\Inflector">Inflector</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_variablize">variablize</a>($s)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_tableize">tableize</a>($s)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method_instance">
+        <div class="location">in <a href="../ActiveRecord/Inflector.html#method_instance"><abbr title="ActiveRecord\Inflector">Inflector</abbr></a> at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Inflector.php#L17">line 17</a></div>
+        <code>        static            object
+    <strong>instance</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Get an instance of the {@link Inflector} class.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>object</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_camelize">
+        <div class="location">in <a href="../ActiveRecord/Inflector.html#method_camelize"><abbr title="ActiveRecord\Inflector">Inflector</abbr></a> at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Inflector.php#L28">line 28</a></div>
+        <code>                    string
+    <strong>camelize</strong>(string $s)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Turn a string into its camelized version.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$s</td>
+                <td>string to convert</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_is_upper">
+        <div class="location">in <a href="../ActiveRecord/Inflector.html#method_is_upper"><abbr title="ActiveRecord\Inflector">Inflector</abbr></a> at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Inflector.php#L57">line 57</a></div>
+        <code>        static            bool
+    <strong>is_upper</strong>(string $s)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Determines if a string contains all uppercase characters.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$s</td>
+                <td>string to check</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_is_lower">
+        <div class="location">in <a href="../ActiveRecord/Inflector.html#method_is_lower"><abbr title="ActiveRecord\Inflector">Inflector</abbr></a> at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Inflector.php#L68">line 68</a></div>
+        <code>        static            bool
+    <strong>is_lower</strong>(string $s)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Determines if a string contains all lowercase characters.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$s</td>
+                <td>string to check</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_uncamelize">
+        <div class="location">in <a href="../ActiveRecord/Inflector.html#method_uncamelize"><abbr title="ActiveRecord\Inflector">Inflector</abbr></a> at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Inflector.php#L79">line 79</a></div>
+        <code>                    string
+    <strong>uncamelize</strong>(string $s)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Convert a camelized string to a lowercase, underscored string.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$s</td>
+                <td>string to convert</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_underscorify">
+        <div class="location">in <a href="../ActiveRecord/Inflector.html#method_underscorify"><abbr title="ActiveRecord\Inflector">Inflector</abbr></a> at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Inflector.php#L99">line 99</a></div>
+        <code>                    string
+    <strong>underscorify</strong>(string $s)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Convert a string with space into a underscored equivalent.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$s</td>
+                <td>string to convert</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_keyify">
+        <div class="location">in <a href="../ActiveRecord/Inflector.html#method_keyify"><abbr title="ActiveRecord\Inflector">Inflector</abbr></a> at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Inflector.php#L104">line 104</a></div>
+        <code>                    
+    <strong>keyify</strong>($class_name)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$class_name</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_variablize">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Inflector.php#L118">line 118</a></div>
+        <code>                    
+    <strong>variablize</strong>($s)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$s</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_tableize">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Inflector.php#L117">line 117</a></div>
+        <code>                    
+    <strong>tableize</strong>($s)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$s</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

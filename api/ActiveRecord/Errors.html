@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>ActiveRecord\Errors | PHP ActiveRecord</title>
+
+            <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../css/sami.css">
+        <script src="../js/jquery-1.11.1.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script src="../js/typeahead.min.js"></script>
+        <script src="../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:ActiveRecord_Errors" data-root-path="../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../index.html">PHP ActiveRecord</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../classes.html">Classes</a></li>
+                                            <li><a href="../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../interfaces.html">Interfaces</a></li>
+                    <li><a href="../traits.html">Traits</a></li>
+                    <li><a href="../doc-index.html">Index</a></li>
+                    <li><a href="../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../ActiveRecord.html">ActiveRecord</a></li><li class="backslash">\</li><li>Errors</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            Errors
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>Errors</strong>        implements
+        <a target="_blank" href="http://php.net/IteratorAggregate">IteratorAggregate</a>        (<a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Validations.php">View source</a>)
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>Class that holds {@link Validations} errors.</p>                                </div>
+    
+    
+    
+            <h2>Properties</h2>
+
+            <table class="table table-condensed">
+                    <tr>
+                <td class="type" id="property_DEFAULT_ERROR_MESSAGES">
+                    static                                                            
+                </td>
+                <td>$DEFAULT_ERROR_MESSAGES</td>
+                <td class="last"></td>
+                <td></td>
+            </tr>
+            </table>
+
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../ActiveRecord/Errors.html"><abbr title="ActiveRecord\Errors">Errors</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>(<a href="../ActiveRecord/Model.html"><abbr title="ActiveRecord\Model">Model</abbr></a> $model)
+        
+                                            <p>Constructs an {@link Errors} object.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_clear_model">clear_model</a>()
+        
+                                            <p>Nulls $model so we don't get pesky circular references. $model is only needed during the
+validation process and so can be safely cleared once that is done.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_add">add</a>(string $attribute, string $msg)
+        
+                                            <p>Add an error message.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_add_on_empty">add_on_empty</a>(string $attribute, string $msg)
+        
+                                            <p>Adds an error message only if the attribute value is {@link http://www.php.net/empty empty}.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___get">__get</a>(string $attribute)
+        
+                                            <p>Retrieve error messages for an attribute.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_add_on_blank">add_on_blank</a>(string $attribute, string $msg)
+        
+                                            <p>Adds the error message only if the attribute value was null or an empty string.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    boolean
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_is_invalid">is_invalid</a>(string $attribute)
+        
+                                            <p>Returns true if the specified attribute had any error messages.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="ActiveRecord\string/array">string/array</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_on">on</a>(string $attribute)
+        
+                                            <p>Returns the error message(s) for the specified attribute or null if none.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_get_raw_errors">get_raw_errors</a>()
+        
+                                            <p>Returns the internal errors object.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_full_messages">full_messages</a>()
+        
+                                            <p>Returns all the error messages as an array.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_to_array">to_array</a>(callable $closure = null)
+        
+                                            <p>Returns all the error messages as an array, including error key.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___toString">__toString</a>()
+        
+                                            <p>Convert all error messages to a String.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    boolean
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_is_empty">is_empty</a>()
+        
+                                            <p>Returns true if there are no error messages.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_clear">clear</a>()
+        
+                                            <p>Clears out all error messages.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_size">size</a>()
+        
+                                            <p>Returns the number of error messages there are.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a target="_blank" href="http://php.net/ArrayIterator">ArrayIterator</a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getIterator">getIterator</a>()
+        
+                                            <p>Returns an iterator to the error messages.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Validations.php#L664">line 664</a></div>
+        <code>                    <a href="../ActiveRecord/Errors.html"><abbr title="ActiveRecord\Errors">Errors</abbr></a>
+    <strong>__construct</strong>(<a href="../ActiveRecord/Model.html"><abbr title="ActiveRecord\Model">Model</abbr></a> $model)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Constructs an {@link Errors} object.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../ActiveRecord/Model.html"><abbr title="ActiveRecord\Model">Model</abbr></a></td>
+                <td>$model</td>
+                <td>The model the error is for</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../ActiveRecord/Errors.html"><abbr title="ActiveRecord\Errors">Errors</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_clear_model">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Validations.php#L673">line 673</a></div>
+        <code>                    
+    <strong>clear_model</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Nulls $model so we don't get pesky circular references. $model is only needed during the
+validation process and so can be safely cleared once that is done.</p>                                                </div>
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_add">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Validations.php#L684">line 684</a></div>
+        <code>                    
+    <strong>add</strong>(string $attribute, string $msg)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Add an error message.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$attribute</td>
+                <td>Name of an attribute on the model</td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$msg</td>
+                <td>The error message</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_add_on_empty">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Validations.php#L701">line 701</a></div>
+        <code>                    
+    <strong>add_on_empty</strong>(string $attribute, string $msg)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Adds an error message only if the attribute value is {@link http://www.php.net/empty empty}.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$attribute</td>
+                <td>Name of an attribute on the model</td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$msg</td>
+                <td>The error message</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method___get">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Validations.php#L716">line 716</a></div>
+        <code>                    array
+    <strong>__get</strong>(string $attribute)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Retrieve error messages for an attribute.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$attribute</td>
+                <td>Name of an attribute on the model</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td>or null if there is no error.</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_add_on_blank">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Validations.php#L730">line 730</a></div>
+        <code>                    
+    <strong>add_on_blank</strong>(string $attribute, string $msg)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Adds the error message only if the attribute value was null or an empty string.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$attribute</td>
+                <td>Name of an attribute on the model</td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$msg</td>
+                <td>The error message</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_is_invalid">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Validations.php#L745">line 745</a></div>
+        <code>                    boolean
+    <strong>is_invalid</strong>(string $attribute)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns true if the specified attribute had any error messages.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$attribute</td>
+                <td>Name of an attribute on the model</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>boolean</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_on">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Validations.php#L756">line 756</a></div>
+        <code>                    <abbr title="ActiveRecord\string/array">string/array</abbr>
+    <strong>on</strong>(string $attribute)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns the error message(s) for the specified attribute or null if none.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$attribute</td>
+                <td>Name of an attribute on the model</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="ActiveRecord\string/array">string/array</abbr></td>
+            <td>Array of strings if several error occured on this attribute.</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_get_raw_errors">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Validations.php#L775">line 775</a></div>
+        <code>                    
+    <strong>get_raw_errors</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns the internal errors object.</p>                    <p><code>
+$model->errors->get_raw_errors();</p>
+
+<h1>array(</h1>
+
+<h1>"name" => array("can't be blank"),</h1>
+
+<h1>"state" => array("is the wrong length (should be 2 chars)",</h1>
+
+<h1>)</h1>
+
+<p></code></p>                            </div>
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_full_messages">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Validations.php#L794">line 794</a></div>
+        <code>                    array
+    <strong>full_messages</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns all the error messages as an array.</p>                    <p><code>
+$model->errors->full_messages();</p>
+
+<h1>array(</h1>
+
+<h1>"Name can't be blank",</h1>
+
+<h1>"State is the wrong length (should be 2 chars)"</h1>
+
+<h1>)</h1>
+
+<p></code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_to_array">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Validations.php#L822">line 822</a></div>
+        <code>                    array
+    <strong>to_array</strong>(callable $closure = null)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns all the error messages as an array, including error key.</p>                    <p><code>
+$model->errors->errors();</p>
+
+<h1>array(</h1>
+
+<h1>"name" => array("Name can't be blank"),</h1>
+
+<h1>"state" => array("State is the wrong length (should be 2 chars)")</h1>
+
+<h1>)</h1>
+
+<p></code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>callable</td>
+                <td>$closure</td>
+                <td>Closure to fetch the errors in some other format (optional)
+                      This closure has the signature function($attribute, $message)
+                      and is called for each available error message.</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method___toString">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Validations.php#L856">line 856</a></div>
+        <code>                    string
+    <strong>__toString</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Convert all error messages to a String.</p>                    <p>This function is called implicitely if the object is casted to a string:</p>
+
+<p><code>
+echo $error;</p>
+
+<h1>"Name can't be blank\nState is the wrong length (should be 2 chars)"</h1>
+
+<p></code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_is_empty">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Validations.php#L865">line 865</a></div>
+        <code>                    boolean
+    <strong>is_empty</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns true if there are no error messages.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>boolean</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_clear">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Validations.php#L873">line 873</a></div>
+        <code>                    
+    <strong>clear</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Clears out all error messages.</p>                                                </div>
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_size">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Validations.php#L882">line 882</a></div>
+        <code>                    int
+    <strong>size</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns the number of error messages there are.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getIterator">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Validations.php#L907">line 907</a></div>
+        <code>                    <a target="_blank" href="http://php.net/ArrayIterator">ArrayIterator</a>
+    <strong>getIterator</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns an iterator to the error messages.</p>                    <p>This will allow you to iterate over the {@link Errors} object using foreach.</p>
+
+<p><code>
+foreach ($model->errors as $msg)
+  echo "$msg\n";
+</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a target="_blank" href="http://php.net/ArrayIterator">ArrayIterator</a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

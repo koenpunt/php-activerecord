@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>ActiveRecord\CallBack | PHP ActiveRecord</title>
+
+            <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../css/sami.css">
+        <script src="../js/jquery-1.11.1.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script src="../js/typeahead.min.js"></script>
+        <script src="../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:ActiveRecord_CallBack" data-root-path="../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../index.html">PHP ActiveRecord</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../classes.html">Classes</a></li>
+                                            <li><a href="../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../interfaces.html">Interfaces</a></li>
+                    <li><a href="../traits.html">Traits</a></li>
+                    <li><a href="../doc-index.html">Index</a></li>
+                    <li><a href="../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../ActiveRecord.html">ActiveRecord</a></li><li class="backslash">\</li><li>CallBack</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            CallBack
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>CallBack</strong>        (<a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/CallBack.php">View source</a>)
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>Callbacks allow the programmer to hook into the life cycle of a {@link Model}.</p>            <p>You can control the state of your object by declaring certain methods to be
+called before or after methods are invoked on your object inside of ActiveRecord.</p>
+
+<p>Valid callbacks are:</p>
+
+<ul>
+<li><b>after_construct:</b> called after a model has been constructed</li>
+<li><b>before_save:</b> called before a model is saved</li>
+<li><b>after_save:</b> called after a model is saved</li>
+<li><b>before_create:</b> called before a NEW model is to be inserted into the database</li>
+<li><b>after_create:</b> called after a NEW model has been inserted into the database</li>
+<li><b>before_update:</b> called before an existing model has been saved</li>
+<li><b>after_update:</b> called after an existing model has been saved</li>
+<li><b>before_validation:</b> called before running validators</li>
+<li><b>after_validation:</b> called after running validators</li>
+<li><b>before_validation_on_create:</b> called before validation on a NEW model being inserted</li>
+<li><b>after_validation_on_create:</b> called after validation on a NEW model being inserted</li>
+<li><b>before_validation_on_update:</b> see above except for an existing model being saved</li>
+<li><b>after_validation_on_update:</b> ...</li>
+<li><b>before_destroy:</b> called after a model has been deleted</li>
+<li><b>after_destroy:</b> called after a model has been deleted</li>
+</ul>
+
+<p>This class isn't meant to be used directly. Callbacks are defined on your model like the example below:</p>
+
+<p><code>
+class Person extends ActiveRecord\Model {
+  static $before_save = array('make_name_uppercase');
+  static $after_save = array('do_happy_dance');</p>
+
+<p>public function make_name_uppercase() {
+    $this->name = strtoupper($this->name);
+  }</p>
+
+<p>public function do_happy_dance() {
+    happy_dance();
+  }
+}
+</code></p>
+
+<p>Available options for callbacks:</p>
+
+<ul>
+<li><b>prepend:</b> puts the callback at the top of the callback chain instead of the bottom</li>
+</ul>
+</p>                    </div>
+    
+    
+    
+            <h2>Properties</h2>
+
+            <table class="table table-condensed">
+                    <tr>
+                <td class="type" id="property_VALID_CALLBACKS">
+                    static                    protected                                        array
+                </td>
+                <td>$VALID_CALLBACKS</td>
+                <td class="last">List of available callbacks.</td>
+                <td></td>
+            </tr>
+            </table>
+
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../ActiveRecord/CallBack.html"><abbr title="ActiveRecord\CallBack">CallBack</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>(string $model_class_name)
+        
+                                            <p>Creates a CallBack.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_get_callbacks">get_callbacks</a>($name)
+        
+                                            <p>Returns all the callbacks registered for a callback type.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    mixed
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_invoke">invoke</a>(string $model, string $name, boolean $must_exist = true)
+        
+                                            <p>Invokes a callback.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    void
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_register">register</a>(string $name, mixed $closure_or_method_name = null, array $options = array())
+        
+                                            <p>Register a new callback.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/CallBack.php#L110">line 110</a></div>
+        <code>                    <a href="../ActiveRecord/CallBack.html"><abbr title="ActiveRecord\CallBack">CallBack</abbr></a>
+    <strong>__construct</strong>(string $model_class_name)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Creates a CallBack.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$model_class_name</td>
+                <td>The name of a {@link Model} class</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../ActiveRecord/CallBack.html"><abbr title="ActiveRecord\CallBack">CallBack</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_get_callbacks">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/CallBack.php#L140">line 140</a></div>
+        <code>                    array
+    <strong>get_callbacks</strong>($name)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns all the callbacks registered for a callback type.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$name</td>
+                <td>string Name of a callback (see {@link VALID_CALLBACKS $VALID_CALLBACKS})</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td>array of callbacks or null if invalid callback name.</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_invoke">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/CallBack.php#L159">line 159</a></div>
+        <code>                    mixed
+    <strong>invoke</strong>(string $model, string $name, boolean $must_exist = true)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Invokes a callback.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$model</td>
+                <td>Model to invoke the callback on.</td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$name</td>
+                <td>Name of the callback to invoke</td>
+            </tr>
+                    <tr>
+                <td>boolean</td>
+                <td>$must_exist</td>
+                <td>Set to true to raise an exception if the callback does not exist.</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>mixed</td>
+            <td>null if $name was not a valid callback type or false if a method was invoked
+that was for a before_* callback and that method returned false. If this happens, execution
+of any other callbacks after the offending callback will not occur.</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_register">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/CallBack.php#L211">line 211</a></div>
+        <code>                    void
+    <strong>register</strong>(string $name, mixed $closure_or_method_name = null, array $options = array())
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Register a new callback.</p>                    <p>The option array can contain the following parameters:</p>
+
+<ul>
+<li><b>prepend:</b> Add this callback at the beginning of the existing callbacks (true) or at the end (false, default)</li>
+</ul>
+</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$name</td>
+                <td>Name of callback type (see {@link VALID_CALLBACKS $VALID_CALLBACKS})</td>
+            </tr>
+                    <tr>
+                <td>mixed</td>
+                <td>$closure_or_method_name</td>
+                <td>Either a closure or the name of a method on the {@link Model}</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>Options array</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>void</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../ActiveRecord/ActiveRecordException.html"><abbr title="ActiveRecord\ActiveRecordException">ActiveRecordException</abbr></a></td>
+                <td>if invalid callback type or callback method was not found</td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

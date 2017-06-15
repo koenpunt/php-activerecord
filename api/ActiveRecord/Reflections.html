@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>ActiveRecord\Reflections | PHP ActiveRecord</title>
+
+            <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../css/sami.css">
+        <script src="../js/jquery-1.11.1.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script src="../js/typeahead.min.js"></script>
+        <script src="../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:ActiveRecord_Reflections" data-root-path="../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../index.html">PHP ActiveRecord</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../classes.html">Classes</a></li>
+                                            <li><a href="../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../interfaces.html">Interfaces</a></li>
+                    <li><a href="../traits.html">Traits</a></li>
+                    <li><a href="../doc-index.html">Index</a></li>
+                    <li><a href="../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../ActiveRecord.html">ActiveRecord</a></li><li class="backslash">\</li><li>Reflections</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            Reflections
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>Reflections</strong>        extends <a href="../ActiveRecord/Singleton.html"><abbr title="ActiveRecord\Singleton">Singleton</abbr></a>        (<a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Reflections.php">View source</a>)
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>Simple class that caches reflections of classes.</p>                                </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;object
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_instance">instance</a>()
+        
+                                            <p>Static method for instantiating a singleton object.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../ActiveRecord/Singleton.html#method_instance"><abbr title="ActiveRecord\Singleton">Singleton</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_get_called_class">get_called_class</a>()
+        
+                                            <p>Similar to a get_called_class() for a child class to invoke.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../ActiveRecord/Singleton.html#method_get_called_class"><abbr title="ActiveRecord\Singleton">Singleton</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../ActiveRecord/Reflections.html"><abbr title="ActiveRecord\Reflections">Reflections</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_add">add</a>(string $class = null)
+        
+                                            <p>Instantiates a new ReflectionClass for the given class.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    void
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_destroy">destroy</a>(string $class)
+        
+                                            <p>Destroys the cached ReflectionClass.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    mixed
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_get">get</a>(string $class = null)
+        
+                                            <p>Get a cached ReflectionClass.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method_instance">
+        <div class="location">in <a href="../ActiveRecord/Singleton.html#method_instance"><abbr title="ActiveRecord\Singleton">Singleton</abbr></a> at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Singleton.php#L29">line 29</a></div>
+        <code>final        static            object
+    <strong>instance</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Static method for instantiating a singleton object.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>object</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_get_called_class">
+        <div class="location">in <a href="../ActiveRecord/Singleton.html#method_get_called_class"><abbr title="ActiveRecord\Singleton">Singleton</abbr></a> at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Singleton.php#L51">line 51</a></div>
+        <code>final            protected        string
+    <strong>get_called_class</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Similar to a get_called_class() for a child class to invoke.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_add">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Reflections.php#L28">line 28</a></div>
+        <code>                    <a href="../ActiveRecord/Reflections.html"><abbr title="ActiveRecord\Reflections">Reflections</abbr></a>
+    <strong>add</strong>(string $class = null)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Instantiates a new ReflectionClass for the given class.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$class</td>
+                <td>Name of a class</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../ActiveRecord/Reflections.html"><abbr title="ActiveRecord\Reflections">Reflections</abbr></a></td>
+            <td>$this so you can chain calls like Reflections::instance()->add('class')->get()</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_destroy">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Reflections.php#L46">line 46</a></div>
+        <code>                    void
+    <strong>destroy</strong>(string $class)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Destroys the cached ReflectionClass.</p>                    <p>Put this here mainly for testing purposes.</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$class</td>
+                <td>Name of a class.</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>void</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_get">
+        <div class="location">at         <a href="https://github.com/jpfuentes2/php-activerecord/blob/master/lib/Reflections.php#L59">line 59</a></div>
+        <code>                    mixed
+    <strong>get</strong>(string $class = null)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Get a cached ReflectionClass.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$class</td>
+                <td>Optional name of a class</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>mixed</td>
+            <td>null or a ReflectionClass instance</td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../ActiveRecord/ActiveRecordException.html"><abbr title="ActiveRecord\ActiveRecordException">ActiveRecordException</abbr></a></td>
+                <td>if class was not found</td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>
